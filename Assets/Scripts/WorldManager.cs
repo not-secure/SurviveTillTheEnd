@@ -55,7 +55,7 @@ public class WorldManager : MonoBehaviour
         if (IsWater(x, y))
             return false;
         
-        var location = new Tuple<int, int>(x, y);
+        var location = new Vector2Int(x, y);
         
         if (blocks.ContainsKey(location))
             return false;
@@ -70,7 +70,7 @@ public class WorldManager : MonoBehaviour
         if (!IsAir(x, y))
             return false;
 
-        var location = new Tuple<int, int>(x, y);
+        var location = new Vector2Int(x, y);
         blocks.Add(location, block);
         return true;
     }
