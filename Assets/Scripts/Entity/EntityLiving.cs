@@ -5,11 +5,11 @@ namespace Entity {
         public PathPlanner pathPlanner;
 
         public EntityLiving(): base() {
-            this.pathPlanner = new PathPlanner(this);
+            pathPlanner = new PathPlanner(this);
         }
         
         public override void OnTick() {
-            this.pathPlanner.Update();
+            pathPlanner.Update();
         }
     }
 }

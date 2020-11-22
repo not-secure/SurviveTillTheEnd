@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
 namespace Entity.Friendly {
-    public class EntityRabbit: EntityBase {
+    public class EntityRabbit: EntityLiving {
         public override Object GetPrefab() {
-            Object prefab = Resources.Load("Prefab/Entities/Rabbit");
+            Object prefab = Resources.Load("Prefabs/Entities/Rabbit");
             return prefab;
         }
     }

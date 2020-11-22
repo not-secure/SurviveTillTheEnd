@@ -6,11 +6,11 @@ namespace Entity {
         public GameObject entity;
         
         public Vector3 GetPosition() {
-            return this.entity.transform.position;
+            return entity.transform.position;
         }
 
         public GameObject GetObject() {
-            return this.entity;
+            return entity;
         }
 
         public virtual void OnTick() {
@@ -19,13 +19,13 @@ namespace Entity {
 
         public abstract Object GetPrefab();
         public void Spawn(Transform transform) {
-            if (this.entity)
+            if (entity)
                 return;
             
-            var prefab = this.GetPrefab();
-            this.entity = (GameObject) Object.Instantiate(prefab, transform);
+            var prefab = GetPrefab();
+            entity = (GameObject) Object.Instantiate(prefab, transform);
             
-            var controller = this.entity.GetComponent<EntityController>();
+            var controller = entity.GetComponent<EntityController>();
             controller.entity = this;
         }
     }

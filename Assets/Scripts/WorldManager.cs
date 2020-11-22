@@ -22,8 +22,8 @@ public class WorldManager : MonoBehaviour
 
     public void GenerateWorld()
     {
-        this.entityManager = new EntityManager(entityObject);
-        this.entityManager.SpawnEntity<EntityRabbit>(0, 0, 0);
+        entityManager = new EntityManager(entityObject);
+        entityManager.SpawnEntity<EntityRabbit>(0, 0, 0);
         
         if (seed != -1)
             Random.InitState(seed);

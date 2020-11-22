@@ -1,14 +1,14 @@
 ﻿namespace Entity.Behavior {
     public abstract class BehaviorCondition: Behavior {
         public override void Execute(EntityBase entity) {
-            var condition = this.GetCondition(entity);
+            var condition = GetCondition(entity);
 
             if (condition) {
-                this.OnTrue(entity);
+                OnTrue(entity);
                 return;
             }
 
-            this.OnFalse(entity);
+            OnFalse(entity);
         }
 
         protected abstract bool GetCondition(EntityBase entity);
