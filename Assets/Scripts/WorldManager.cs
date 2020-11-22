@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Block;
+using Entity;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,9 +15,12 @@ public class WorldManager : MonoBehaviour
     public GameObject landObject;
 
     private Dictionary<Tuple<int, int>, BlockBase> blocks;
+    public EntityManager entityManager;
 
     public void GenerateWorld()
     {
+        this.entityManager = new EntityManager();
+        
         if (seed != -1)
             Random.InitState(seed);
 
