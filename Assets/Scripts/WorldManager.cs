@@ -17,8 +17,8 @@ public class WorldManager : MonoBehaviour
     public GameObject entityObject;
     public EntityManager entityManager;
 
-    private Dictionary<Tuple<int, int>, BlockBase> blocks =
-        new Dictionary<Tuple<int, int>, BlockBase>();
+    private Dictionary<Vector2Int, BlockBase> blocks =
+        new Dictionary<Vector2Int, BlockBase>();
 
     public void GenerateWorld()
     {
@@ -47,7 +47,7 @@ public class WorldManager : MonoBehaviour
     }
     
     public BlockBase GetBlock(int x, int y) {
-        var contains = blocks.TryGetValue(new Tuple<int, int>(x, y), out var block);
+        var contains = blocks.TryGetValue(new Vector2Int(x, y), out var block);
         return contains ? block : null;
     }
 
@@ -55,7 +55,7 @@ public class WorldManager : MonoBehaviour
         if (IsWater(x, y))
             return false;
         
-        var location = new Tuple<int, int>(x, y);
+        var location = new Vector2Int(x, y);
         
         if (blocks.ContainsKey(location))
             return false;
@@ -70,7 +70,7 @@ public class WorldManager : MonoBehaviour
         if (!IsAir(x, y))
             return false;
 
-        var location = new Tuple<int, int>(x, y);
+        var location = new Vector2Int(x, y);
         blocks.Add(location, block);
         return true;
     }
