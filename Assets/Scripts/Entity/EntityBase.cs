@@ -5,8 +5,8 @@ namespace Entity {
         public int id;
         public GameObject entity;
         
-        public EntityBase(int id) {
-            this.id = id;
+        public EntityBase() {
+            this.id = -1;
         }
 
         public Vector3 GetPosition() {
@@ -24,6 +24,9 @@ namespace Entity {
             
             var prefab = this.GetPrefab();
             this.entity = (GameObject) Object.Instantiate(prefab, transform);
+            
+            var controller = this.entity.GetComponent<EntityController>();
+            controller.entity = this;
         }
     }
 }

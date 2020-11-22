@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Block;
 using Entity;
+using Entity.Friendly;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,13 +14,16 @@ public class WorldManager : MonoBehaviour
     public Vector2Int maxThreshold;
 
     public GameObject landObject;
-
-    private Dictionary<Tuple<int, int>, BlockBase> blocks;
+    public GameObject entityObject;
     public EntityManager entityManager;
+
+    private Dictionary<Tuple<int, int>, BlockBase> blocks =
+        new Dictionary<Tuple<int, int>, BlockBase>();
 
     public void GenerateWorld()
     {
-        this.entityManager = new EntityManager();
+        this.entityManager = new EntityManager(entityObject);
+        this.entityManager.SpawnEntity<EntityRabbit>(0, 0, 0);
         
         if (seed != -1)
             Random.InitState(seed);

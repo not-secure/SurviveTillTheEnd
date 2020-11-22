@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 namespace Entity {
-    public class Controller : MonoBehaviour {
-        
+    public class EntityController : MonoBehaviour {
+        public EntityBase entity;
     }
 }
