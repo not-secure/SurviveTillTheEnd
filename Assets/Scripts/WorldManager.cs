@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Block;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class WorldManager : MonoBehaviour
 {
@@ -9,6 +12,8 @@ public class WorldManager : MonoBehaviour
     public Vector2Int maxThreshold;
 
     public GameObject landObject;
+
+    private Dictionary<Tuple<int, int>, BlockBase> blocks;
 
     public void GenerateWorld()
     {
@@ -22,13 +27,44 @@ public class WorldManager : MonoBehaviour
         {
             for (float j = 0; j < maxThreshold.y; j++)
             {
-                var perlin = Mathf.PerlinNoise(i / 10, j / 10);
-                if (perlin > perlinThreshold)
-                {
+                if (!IsWater((int) i, (int) j)) {
                     Instantiate(landObject, new Vector3(i * width, 0, j * height), Quaternion.identity);
                 }
             }
         }
+    }
+
+    public bool IsWater(int x, int y) {
+        return Mathf.PerlinNoise((float) x / 10, (float) y / 10) <= perlinThreshold;
+    }
+    
+    public BlockBase GetBlock(int x, int y) {
+        var contains = blocks.TryGetValue(new Tuple<int, int>(x, y), out var block);
+        return contains ? block : null;
+    }
+
+    public bool IsAir(int x, int y) {
+        if (IsWater(x, y))
+            return false;
+        
+        var location = new Tuple<int, int>(x, y);
+        
+        if (blocks.ContainsKey(location))
+            return false;
+
+        return true;
+    }
+    
+    public bool SetBlock(BlockBase block) {
+        var x = block.getX();
+        var y = block.getY();
+
+        if (!IsAir(x, y))
+            return false;
+
+        var location = new Tuple<int, int>(x, y);
+        blocks.Add(location, block);
+        return true;
     }
 
     public void Update()
