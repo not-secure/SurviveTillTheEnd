@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public enum DayStatus { Day, Night };
 
+    public GameObject daylightObject;
+
     public int time;
     public int changePeriod = 100;
     public DayStatus dayStatus;
@@ -14,12 +16,15 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K))
             StartGame();
+
+        daylightObject.transform.rotation = Quaternion.RotateTowards(daylightObject.transform.rotation, Quaternion.Euler(180 + ((float)time / changePeriod * -360), 0, 0), Time.deltaTime);
     }
 
     public void StartGame()
     {
         time = 0;
         dayStatus = DayStatus.Day;
+        daylightObject.transform.Rotate(new Vector3(180, 0, 0));
 
         StartCoroutine(UpdateGame());
         Debug.Log("Starting game...");
