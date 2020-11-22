@@ -2,19 +2,19 @@
 
 namespace Entity {
     public abstract class EntityBase {
-        public int id;
+        public int id = -1;
         public GameObject entity;
         
-        public EntityBase() {
-            this.id = -1;
-        }
-
         public Vector3 GetPosition() {
             return this.entity.transform.position;
         }
 
         public GameObject GetObject() {
             return this.entity;
+        }
+
+        public virtual void OnTick() {
+            
         }
 
         public abstract Object GetPrefab();

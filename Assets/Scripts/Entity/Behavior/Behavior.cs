@@ -1,5 +1,5 @@
 ﻿namespace Entity.Behavior {
-    public class Behavior {
-        
+    public abstract class Behavior {
+        public abstract void Execute(EntityBase entity);
     }
 }
