@@ -22,25 +22,27 @@ public class WorldManager : MonoBehaviour
 
     public void GenerateWorld()
     {
-        entityManager = new EntityManager(entityObject);
-        entityManager.SpawnEntity<EntityRabbit>(0, 0, 0);
-        
+        entityManager = new EntityManager(this, entityObject);
+        var entity = entityManager.SpawnEntity<EntityRabbit>(30, 2, 20);
+
         if (seed != -1)
             Random.InitState(seed);
-
-        float width = landObject.transform.lossyScale.x;
-        float height = landObject.transform.lossyScale.y;
 
         for (float i = 0; i < maxThreshold.x; i++)
         {
             for (float j = 0; j < maxThreshold.y; j++)
             {
                 if (!IsWater((int) i, (int) j)) {
-                    Instantiate(landObject, new Vector3(i * width, 0, j * height), Quaternion.identity);
+                    Instantiate(landObject, new Vector3(i * Width, 0, j * Height), Quaternion.identity);
                 }
             }
         }
+        
+        entity.pathPlanner.MoveTo(new Vector2Int(0, 0));
     }
+
+    public float Width => landObject.transform.lossyScale.x;
+    public float Height => landObject.transform.lossyScale.y;
 
     public bool IsWater(int x, int y) {
         return Mathf.PerlinNoise((float) x / 10, (float) y / 10) <= perlinThreshold;
@@ -52,6 +54,12 @@ public class WorldManager : MonoBehaviour
     }
 
     public bool IsAir(int x, int y) {
+        if (x < 0 || y < 0)
+            return false;
+
+        if (x > maxThreshold.x || y > maxThreshold.y)
+            return false;
+        
         if (IsWater(x, y))
             return false;
         
@@ -75,9 +83,8 @@ public class WorldManager : MonoBehaviour
         return true;
     }
 
-    public void Update()
+    public void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            GenerateWorld();
+        GenerateWorld();
     }
 }
