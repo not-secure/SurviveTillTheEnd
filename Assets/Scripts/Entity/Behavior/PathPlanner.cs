@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Common;
 using UnityEngine;
 
 namespace Entity.Behavior {
     class ExplorationNode: IComparable<ExplorationNode> {
-        public Vector2Int node;
-        public Vector2Int target;
-        public float distance;
-        public Vector2Int? lastNode;
+        public Vector2Int Node;
+        public Vector2Int Target;
+        public float Distance;
+        public Vector2Int? LastNode;
         
         public ExplorationNode(
             Vector2Int node,
@@ -16,90 +15,90 @@ namespace Entity.Behavior {
             float distance = Single.PositiveInfinity,
             Vector2Int? lastNode = null
         ) {
-            this.node = node;
-            this.target = target;
-            this.distance = distance;
-            this.lastNode = lastNode;
+            this.Node = node;
+            this.Target = target;
+            this.Distance = distance;
+            this.LastNode = lastNode;
         }
 
-        public float heuristic => Mathf.Abs((target - node).x) + Mathf.Abs((target - node).y);
-        public float estimatedDistance => heuristic + distance;
+        public float Heuristic => Mathf.Abs((Target - Node).x) + Mathf.Abs((Target - Node).y);
+        public float EstimatedDistance => Heuristic + Distance;
 
         public int CompareTo(ExplorationNode other) {
             if (ReferenceEquals(this, other)) return 0;
             if (ReferenceEquals(null, other)) return 1;
             
-            return estimatedDistance.CompareTo(other.estimatedDistance);
+            return EstimatedDistance.CompareTo(other.EstimatedDistance);
         }
     }
     
     public class PathPlanner {
-        public int intelligence = 128;
-        public int realTimeIntelligence = 16;
+        public int Intelligence = 128;
+        public int RealTimeIntelligence = 16;
         
-        public EntityBase entity;
-        public List<Vector2Int> plan = new List<Vector2Int>();
-        public Vector2Int? target = null;
+        public EntityBase Entity;
+        public List<Vector2Int> Plan = new List<Vector2Int>();
+        public Vector2Int? Target;
 
         public PathPlanner(EntityBase entity) {
-            this.entity = entity;
+            this.Entity = entity;
         }
 
         public Vector2Int? GetNextLocation() {
-            if (!target.HasValue)
+            if (!Target.HasValue)
                 return null;
             
-            if (this.plan.Count == 0) {
+            if (this.Plan.Count == 0) {
                 CalculatePath(true);
             }
             
-            if (this.plan.Count > 0) {
-                var lastItem = this.plan.Count - 1;
-                var item = this.plan[lastItem];
-                this.plan.Remove(item);
+            if (this.Plan.Count > 0) {
+                var lastItem = this.Plan.Count - 1;
+                var item = this.Plan[lastItem];
+                this.Plan.Remove(item);
 
                 return item;
             } else {
                 // Path not found
-                return target;
+                return Target;
             }
         }
 
-        private Vector2Int? previousLocation;
+        private Vector2Int? _previousLocation;
         public void Update() {
-            if (!previousLocation.HasValue) {
-                previousLocation = GetNextLocation();
+            if (!_previousLocation.HasValue) {
+                _previousLocation = GetNextLocation();
             }
 
-            if (previousLocation.HasValue) {
-                var finished = entity.MoveTowards(previousLocation.Value);
+            if (_previousLocation.HasValue) {
+                var finished = Entity.MoveTowards(_previousLocation.Value);
                 if (finished) {
-                    previousLocation = GetNextLocation();
+                    _previousLocation = GetNextLocation();
                 }
             }
         }
 
         public void MoveTo(Vector2Int block) {
-            this.target = block;
-            this.previousLocation = null;
+            this.Target = block;
+            this._previousLocation = null;
             this.CalculatePath();
         }
 
         public void CalculatePath(bool isRealtime = false) {
-            if (!this.target.HasValue)
+            if (!this.Target.HasValue)
                 return;
             
             var queue = new SortedSet<ExplorationNode>();
             var nodes = new Dictionary<Vector2Int, ExplorationNode>();
             
             var maxExpansion = isRealtime ?
-                this.realTimeIntelligence :
-                this.intelligence;
+                this.RealTimeIntelligence :
+                this.Intelligence;
 
-            var start = new Vector2Int(entity.x, entity.y);
+            var start = new Vector2Int(Entity.x, Entity.y);
             var startNode = new ExplorationNode(
                 start,
-                this.target.Value,
+                this.Target.Value,
                 0
             );
             
@@ -114,23 +113,23 @@ namespace Entity.Behavior {
 
                 lastVisit = traversal;
                 
-                if (traversal.node == target) {
+                if (traversal.Node == Target) {
                     break;
                 }
 
-                if (!entity.world.IsAir(traversal.node.x, traversal.node.y)) {
+                if (!Entity.World.IsAir(traversal.Node.x, traversal.Node.y)) {
                     continue;
                 }
                 
-                var availNodes = new Vector2Int[] {
-                    new Vector2Int(traversal.node.x + 1, traversal.node.y),
-                    new Vector2Int(traversal.node.x - 1, traversal.node.y),
-                    new Vector2Int(traversal.node.x, traversal.node.y + 1),
-                    new Vector2Int(traversal.node.x, traversal.node.y - 1)
+                var availNodes = new[] {
+                    new Vector2Int(traversal.Node.x + 1, traversal.Node.y),
+                    new Vector2Int(traversal.Node.x - 1, traversal.Node.y),
+                    new Vector2Int(traversal.Node.x, traversal.Node.y + 1),
+                    new Vector2Int(traversal.Node.x, traversal.Node.y - 1)
                 };
 
                 foreach (var nextNode in availNodes) {
-                    if (!entity.world.IsAir(nextNode.x, nextNode.y)) {
+                    if (!Entity.World.IsAir(nextNode.x, nextNode.y)) {
                         Debug.Log("Skip " + nextNode);
                         continue;
                     }
@@ -138,39 +137,39 @@ namespace Entity.Behavior {
                     if (!nodes.ContainsKey(nextNode)) {
                         var nextNodeObject = new ExplorationNode(
                             nextNode,
-                            this.target.Value,
-                            traversal.distance + 1,
-                            traversal.node
+                            this.Target.Value,
+                            traversal.Distance + 1,
+                            traversal.Node
                         );
                         nodes.Add(nextNode, nextNodeObject);
                         queue.Add(nextNodeObject);
                     } else {
                         var nextNodeObject = nodes[nextNode];
-                        if (nextNodeObject.distance > traversal.distance + 1) {
+                        if (nextNodeObject.Distance > traversal.Distance + 1) {
                             queue.Remove(nextNodeObject);
-                            nextNodeObject.distance = traversal.distance + 1;
+                            nextNodeObject.Distance = traversal.Distance + 1;
                             queue.Add(nextNodeObject);
                         }
                     }
                 }
 
-                Debug.Log("Expand " + traversal.node);
+                Debug.Log("Expand " + traversal.Node);
                 expansion++;
             }
 
-            plan.Clear();
+            Plan.Clear();
             
             var planningNode = lastVisit;
             while (planningNode == startNode) {
-                plan.Add(planningNode.node);
+                Plan.Add(planningNode.Node);
 
-                if (!planningNode.lastNode.HasValue)
+                if (!planningNode.LastNode.HasValue)
                     break;
                 
-                var previousNode = nodes[planningNode.lastNode.Value];
+                var previousNode = nodes[planningNode.LastNode.Value];
                 planningNode = previousNode;
             }
-            plan.Reverse();
+            Plan.Reverse();
         }
     }
 }

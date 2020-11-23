@@ -3,21 +3,21 @@ using UnityEngine;
 
 namespace Entity {
     public abstract class EntityLiving: EntityBase {
-        public PathPlanner pathPlanner;
-        public Animation animation;
+        public readonly PathPlanner PathPlanner;
+        public Animation Animation;
 
         public EntityLiving(): base() {
-            pathPlanner = new PathPlanner(this);
+            PathPlanner = new PathPlanner(this);
         }
 
         public override void OnInit() {
             base.OnInit();
-            this.animation = this.entity.GetComponent<Animation>();
+            this.Animation = this.Entity.GetComponent<Animation>();
         }
         
         public override void OnTick() {
             base.OnTick();
-            pathPlanner.Update();
+            PathPlanner.Update();
         }
         
         public override bool MoveTowards(Vector2Int target) {

@@ -1,14 +1,6 @@
 ﻿namespace Block {
-    public class BlockBase {
-        private int x = 0;
-        private int y = 0;
-
-        public int getX() {
-            return this.x;
-        }
-
-        public int getY() {
-            return this.y;
-        }
+    public abstract class BlockBase {
+        public int X { get; } = 0;
+        public int Y { get; } = 0;
     }
 }

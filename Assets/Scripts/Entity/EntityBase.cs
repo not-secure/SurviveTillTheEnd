@@ -1,36 +1,37 @@
 ﻿using UnityEngine;
+using World;
 
 namespace Entity {
     public abstract class EntityBase {
-        public float friction = .2f;
-        public float speed = 1f;
+        public readonly float Friction = .2f;
+        public readonly float Speed = 1f;
         
-        public int id = -1;
-        public GameObject entity;
-        public WorldManager world;
-        public Vector3 motion;
+        public int ID = -1;
+        public GameObject Entity;
+        public WorldManager World;
+        public Vector3 Motion;
 
-        public Vector3 Position => this.entity.transform.position;
-        public int x => Mathf.RoundToInt(this.Position.x / world.Width);
-        public int y => Mathf.RoundToInt(this.Position.y / world.Height);
+        public Vector3 Position => this.Entity.transform.position;
+        public int x => Mathf.RoundToInt(this.Position.x / World.Width);
+        public int y => Mathf.RoundToInt(this.Position.y / World.Height);
 
         public virtual void OnInit() {
             
         }
         
         public virtual void OnTick() {
-            motion *= (1 - friction);
-            this.entity.transform.position += motion;
+            Motion *= (1 - Friction);
+            this.Entity.transform.position += Motion;
         }
 
         public virtual bool MoveTowards(Vector2Int target) {
-            var position = this.entity.transform.position;
+            var position = this.Entity.transform.position;
             
-            this.entity.transform.position =
+            this.Entity.transform.position =
                 Vector3.MoveTowards(
                     position,
-                    new Vector3(target.x * world.Width, position.y, target.y * world.Height),
-                    speed * Time.deltaTime
+                    new Vector3(target.x * World.Width, position.y, target.y * World.Height),
+                    Speed * Time.deltaTime
                 );
 
             if (this.x == target.x && this.y == target.y) {
@@ -42,14 +43,14 @@ namespace Entity {
 
         public abstract Object GetPrefab();
         public void Spawn(Transform transform) {
-            if (entity)
+            if (Entity)
                 return;
             
             var prefab = GetPrefab();
-            entity = (GameObject) Object.Instantiate(prefab, transform);
+            Entity = (GameObject) Object.Instantiate(prefab, transform);
             
-            var controller = entity.GetComponent<EntityController>();
-            controller.entity = this;
+            var controller = Entity.GetComponent<EntityController>();
+            controller.Entity = this;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using World;
 
 namespace Entity {
     public class EntityManager {
@@ -33,13 +34,13 @@ namespace Entity {
             
             var id = GetLastEntityId();
             var entity = new TEntity {
-                id = id,
-                world = world
+                ID = id,
+                World = world
             };
             entity.Spawn(baseEntity.transform);
-            entity.entity.transform.position = new Vector3(x, y, z);
+            entity.Entity.transform.position = new Vector3(x, y, z);
             if (rotation.HasValue) {
-                entity.entity.transform.rotation = rotation.Value;
+                entity.Entity.transform.rotation = rotation.Value;
             }
             entity.OnInit();
             entities.Add(id, entity);

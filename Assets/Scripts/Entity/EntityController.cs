@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace Entity {
     public class EntityController : MonoBehaviour {
-        public EntityBase entity;
+        public EntityBase Entity;
 
         public void Update() {
-            entity?.OnTick();
+            Entity?.OnTick();
         }
     }
 }
