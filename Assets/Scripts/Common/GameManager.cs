@@ -1,53 +1,65 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using Player;
 using UnityEngine;
+using World;
 
-public class GameManager : MonoBehaviour
-{
-    public enum DayStatus { Day, Night };
-
-    public GameObject daylightObject;
-
-    public int time;
-    public int changePeriod = 100;
-    public DayStatus dayStatus;
-
-    public void Update()
+namespace Common {
+    public class GameManager : MonoBehaviour
     {
-        if (Input.GetKeyDown(KeyCode.K))
-            StartGame();
+        public enum DayStatus { Day, Night };
 
-        daylightObject.transform.rotation = Quaternion.RotateTowards(daylightObject.transform.rotation, Quaternion.Euler(180 + ((float)time / changePeriod * -360), 0, 0), Time.deltaTime);
-    }
+        public GameObject daylightObject;
+        public GameObject playerObject;
+        public GameObject worldManagerObject;
 
-    public void StartGame()
-    {
-        time = 0;
-        dayStatus = DayStatus.Day;
-        daylightObject.transform.Rotate(new Vector3(180, 0, 0));
+        [NonSerialized] public PlayerController Player;
+        [NonSerialized] public WorldManager World;
 
-        StartCoroutine(UpdateGame());
-        Debug.Log("Starting game...");
-    }
+        public int time;
+        public int changePeriod = 100;
+        public DayStatus dayStatus;
 
-    public void ChangeDayStatus()
-    {
-        if (dayStatus == DayStatus.Day)
-            dayStatus = DayStatus.Night;
-        else
-            dayStatus = DayStatus.Day;
-    }
-
-    public IEnumerator UpdateGame()
-    {
-        while (true)
+        public void Update()
         {
-            time += 1;
+            if (Input.GetKeyDown(KeyCode.K))
+                StartGame();
 
-            if (time % changePeriod == 0)
-                ChangeDayStatus();
+            daylightObject.transform.rotation = Quaternion.RotateTowards(daylightObject.transform.rotation, Quaternion.Euler(180 + ((float)time / changePeriod * -360), 0, 0), Time.deltaTime);
+        }
 
-            yield return new WaitForSeconds(1f);
+        public void StartGame()
+        {
+            time = 0;
+            dayStatus = DayStatus.Day;
+            daylightObject.transform.Rotate(new Vector3(180, 0, 0));
+
+            Player = playerObject.GetComponent<PlayerController>();
+            World = worldManagerObject.GetComponent<WorldManager>();
+
+            StartCoroutine(UpdateGame());
+            Debug.Log("Starting game...");
+        }
+
+        public void ChangeDayStatus()
+        {
+            if (dayStatus == DayStatus.Day)
+                dayStatus = DayStatus.Night;
+            else
+                dayStatus = DayStatus.Day;
+        }
+
+        public IEnumerator UpdateGame()
+        {
+            while (true)
+            {
+                time += 1;
+
+                if (time % changePeriod == 0)
+                    ChangeDayStatus();
+
+                yield return new WaitForSeconds(1f);
+            }
         }
     }
 }

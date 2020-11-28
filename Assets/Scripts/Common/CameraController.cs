@@ -1,23 +1,25 @@
 ﻿using UnityEngine;
 
-public class CameraController : MonoBehaviour
-{
-    public GameObject cameraObject;
-    public GameObject targetObject;
-
-    public Vector3 offset;
-
-    public void Start()
+namespace Common {
+    public class CameraController : MonoBehaviour
     {
-        if (cameraObject == null)
-            cameraObject = this.gameObject;
-    }
+        public GameObject cameraObject;
+        public GameObject targetObject;
 
-    public void Update()
-    {
-        Vector3 updatedPosition = targetObject.transform.position;
-        updatedPosition += offset;
+        public Vector3 offset;
 
-        cameraObject.transform.position = updatedPosition;
+        public void Start()
+        {
+            if (cameraObject == null)
+                cameraObject = this.gameObject;
+        }
+
+        public void Update()
+        {
+            Vector3 updatedPosition = targetObject.transform.position;
+            updatedPosition += offset;
+
+            cameraObject.transform.position = updatedPosition;
+        }
     }
 }
