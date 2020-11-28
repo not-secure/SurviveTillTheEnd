@@ -13,10 +13,10 @@ namespace Player {
         public GameObject gameManager;
 
         private GameManager _manager;
-        public readonly Inventory Inventory = new Inventory(32);
+        // public readonly Inventory Inventory = new Inventory(32);
 
         public void GiveItemOrDrop(ItemBase addingItem) {
-            var leftItem = Inventory.AddItem(addingItem);
+            // var leftItem = Inventory.AddItem(addingItem);
             var position = transform.position;
             _manager.World.EntityManager.SpawnEntity<EntityItem>(
                 position.x, position.y, position.z

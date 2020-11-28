@@ -8,17 +8,18 @@ namespace UI.Inventory {
         public GameObject slot;
         public GameObject player;
 
-        private global::Item.Inventory _inventory;
-        private UISlot[] slots = new UISlot[30];
+        // private global::Item.Inventory _inventory;
+        // private UISlot[] slots = new UISlot[30];
 
         private void OnEnable() {
-            _inventory = player.GetComponent<PlayerController>().Inventory;
-            _inventory.Items.CollectionChanged += OnChange;
+            // _inventory = player.GetComponent<PlayerController>().Inventory;
+            // _inventory.Items.CollectionChanged += OnChange;
 
             InitializeSlots();
         }
 
         private void InitializeSlots() {
+            /*
             var startX = 270;
             var startY = 80;
             var gap = 100;
@@ -40,6 +41,7 @@ namespace UI.Inventory {
                     }
                 }
             }
+            */
         }
 
         private void OnChange(object sender, NotifyCollectionChangedEventArgs e) {
