@@ -1,7 +1,7 @@
-﻿using System;
-using Common;
+﻿using Common;
 using Entity.Neutral;
 using Item;
+using Item.Items;
 using UnityEngine;
 
 namespace Player {
@@ -13,14 +13,15 @@ namespace Player {
         public GameObject gameManager;
 
         private GameManager _manager;
-        // public readonly Inventory Inventory = new Inventory(32);
+        public readonly Inventory Inventory = new Inventory(30);
 
         public void GiveItemOrDrop(ItemBase addingItem) {
-            // var leftItem = Inventory.AddItem(addingItem);
+            var leftItem = Inventory.AddItem(addingItem);
             var position = transform.position;
-            _manager.World.EntityManager.SpawnEntity<EntityItem>(
+            var entityItem = _manager.World.EntityManager.SpawnEntity<EntityItem>(
                 position.x, position.y, position.z
             );
+            entityItem.SetItem(leftItem);
         }
 
         public void Start() {
@@ -33,6 +34,10 @@ namespace Player {
 
             gameObject.transform.Translate(new Vector3(0, vertical * Time.deltaTime, 0));
             gameObject.transform.Rotate(new Vector3(0, 0, horizontal));
+
+            if (Input.GetKey(KeyCode.Alpha1)) {
+                Inventory.AddItem(new ItemPlank(10));
+            }
         }
     }
 }

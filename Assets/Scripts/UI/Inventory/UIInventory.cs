@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Specialized;
+﻿using Item;
 using Player;
 using UnityEngine;
 
@@ -8,44 +7,49 @@ namespace UI.Inventory {
         public GameObject slot;
         public GameObject player;
 
-        // private global::Item.Inventory _inventory;
-        // private UISlot[] slots = new UISlot[30];
+        private global::Item.Inventory _inventory;
+        private readonly UISlot[] _slots = new UISlot[30];
 
         private void OnEnable() {
-            // _inventory = player.GetComponent<PlayerController>().Inventory;
-            // _inventory.Items.CollectionChanged += OnChange;
+            _inventory = player.GetComponent<PlayerController>().Inventory;
+            _inventory.OnChange += OnChange;
 
             InitializeSlots();
         }
 
         private void InitializeSlots() {
-            /*
-            var startX = 270;
-            var startY = 80;
-            var gap = 100;
+            var startX = -90;
+            var startY = 185;
+            var gap = 85;
             
-            for (var y = 0; y < 4; y++) {
+            for (var y = 0; y < 5; y++) {
                 for (var x = 0; x < 6; x++) {
                     var i = y * 6 + x;
-                    var slotObject = Instantiate(slot);
+                    var slotObject = Instantiate(slot, transform);
+                    var slotController = slotObject.GetComponent<UISlot>();
+                    slotController.Inventory = _inventory;
+                    slotController.InventorySlot = i;
+                    
                     var position = slotObject.transform.localPosition;
                     position.x = startX + gap * x;
-                    position.y = startY + gap * y;
+                    position.y = startY - gap * y;
 
-                    slotObject.transform.position = position;
-                    slots[i] = slotObject.GetComponent<UISlot>();
+                    slotObject.transform.localPosition = position;
+                    _slots.SetValue(slotController, i);
 
-                    var currentItem = _inventory.Items[i];
+                    var currentItem = _inventory.Get(i);
                     if (currentItem != null) {
-                        slots[i].SetItem(currentItem);
+                        _slots[i].SetItem(currentItem);
                     }
                 }
             }
-            */
         }
 
-        private void OnChange(object sender, NotifyCollectionChangedEventArgs e) {
-            // TODO implement
+        private void OnChange(global::Item.Inventory inv, InventoryEventArgs e) {
+            var i = e.Index;
+            var uiSlot = _slots[i];
+            var invItem = _inventory.Get(i);
+            uiSlot.SetItem(invItem);
         }
     }
 }

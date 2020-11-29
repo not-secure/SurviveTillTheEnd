@@ -2,8 +2,8 @@
 using UnityEngine;
 
 namespace Item.Items {
-    public class ItemPickAxe: ItemBase {
-        public ItemPickAxe(int count) : base(count) {
+    public class ItemPlank: ItemBase {
+        public ItemPlank(int count) : base(count) {
         }
 
         public override int ItemId => 1;
@@ -11,8 +11,8 @@ namespace Item.Items {
         public override ItemType[] Type => new ItemType[] { ItemType.Burnable, ItemType.Wooden };
         public override string Name => "Wooden Plank";
         
-        public override Sprite GetImage() {
-            return Resources.Load<Sprite>("/Sprites/Items/Materials/Wooden Plank");
+        protected override string GetTextureKey() {
+            return "Sprites/Items/Material/Wooden Plank";
         }
     }
 }

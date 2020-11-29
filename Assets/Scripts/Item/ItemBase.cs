@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Common;
 using UnityEngine;
 
 namespace Item {
@@ -15,7 +16,11 @@ namespace Item {
         public abstract ItemType[] Type { get; }
         public abstract string Name { get; }
 
-        public abstract Sprite GetImage();
+        public Sprite GetImage() {
+            return CachedResources.Load<Sprite>(GetTextureKey());
+        }
+
+        protected abstract string GetTextureKey();
         
         public int Count { get; set; }
 
