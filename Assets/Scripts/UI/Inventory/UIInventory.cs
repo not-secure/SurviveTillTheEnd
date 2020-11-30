@@ -1,16 +1,17 @@
-﻿using Item;
+﻿using System;
+using Item;
 using Player;
 using UnityEngine;
 
 namespace UI.Inventory {
     public class UIInventory: MonoBehaviour {
         public GameObject slot;
-        public GameObject player;
 
         private global::Item.Inventory _inventory;
         private readonly UISlot[] _slots = new UISlot[30];
 
         private void OnEnable() {
+            var player = GameObject.FindGameObjectWithTag("Player");
             _inventory = player.GetComponent<PlayerController>().Inventory;
             _inventory.OnChange += OnChange;
 
@@ -50,6 +51,10 @@ namespace UI.Inventory {
             var uiSlot = _slots[i];
             var invItem = _inventory.Get(i);
             uiSlot.SetItem(invItem);
+        }
+
+        public void OnDisable() {
+            _inventory.OnChange -= OnChange;
         }
     }
 }

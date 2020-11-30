@@ -38,6 +38,12 @@ namespace Player {
             if (Input.GetKey(KeyCode.Alpha1)) {
                 Inventory.AddItem(new ItemPlank(10));
             }
+            if (Input.GetKey(KeyCode.Alpha2)) {
+                Inventory.AddItem(new ItemSilver(10));
+            }
+            if (Input.GetKey(KeyCode.Alpha3)) {
+                Inventory.RemoveItem(new ItemPlank(10));
+            }
         }
     }
 }

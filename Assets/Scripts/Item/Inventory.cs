@@ -105,6 +105,9 @@ namespace Item {
 
                 // Start actual deletion
                 item.Count -= delAmount;
+                if (item.Count == 0) {
+                    _items[i] = null;
+                }
                 OnChange?.Invoke(this, new InventoryEventArgs(i));
                 break;
             }
