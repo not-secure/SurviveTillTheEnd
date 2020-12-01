@@ -2,20 +2,26 @@
 using Item;
 using Player;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.Inventory {
     public class UIInventory: MonoBehaviour {
         public GameObject slot;
-
+        public GameObject craft;
+        public GameObject scrollPane;
+        
+        private PlayerController _player;
         private global::Item.Inventory _inventory;
         private readonly UISlot[] _slots = new UISlot[30];
 
         private void OnEnable() {
             var player = GameObject.FindGameObjectWithTag("Player");
-            _inventory = player.GetComponent<PlayerController>().Inventory;
+            _player = player.GetComponent<PlayerController>();
+            _inventory = _player.Inventory;
             _inventory.OnChange += OnChange;
 
             InitializeSlots();
+            InitializeRecipes();
         }
 
         private void InitializeSlots() {
@@ -43,6 +49,17 @@ namespace UI.Inventory {
                         _slots[i].SetItem(currentItem);
                     }
                 }
+            }
+        }
+
+        private void InitializeRecipes() {
+            var recipes = _player.Craft.GetRecipes();
+            var y = -40;
+            foreach (var recipe in recipes) {
+                var craftObject = Instantiate(craft, scrollPane.transform);
+                
+                var craftUi = craftObject.GetComponent<UICraft>();
+                craftUi.InitializeRecipe(recipe, _player.Craft);
             }
         }
 

@@ -4,7 +4,7 @@ using Common;
 using UnityEngine;
 
 namespace Item {
-    public abstract class ItemBase {
+    public abstract class ItemBase: ICloneable {
         public Dictionary<string, object> Meta;
         
         public ItemBase(int count) {
@@ -25,5 +25,9 @@ namespace Item {
         public int Count { get; set; }
 
         public virtual void UseItem() {}
+
+        public object Clone() {
+            return (ItemBase) Activator.CreateInstance(this.GetType(), new [] { Count });
+        }
     }
 }

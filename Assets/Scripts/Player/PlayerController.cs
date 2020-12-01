@@ -13,12 +13,12 @@ namespace Player {
         public GameObject gameManager;
 
         private GameManager _manager;
+        public CraftManager Craft;
         public readonly Inventory Inventory = new Inventory(30);
 
         public void GiveItemOrDrop(ItemBase addingItem) {
             var leftItem = Inventory.AddItem(addingItem);
             var position = transform.position;
-            EntityItem.DropItem(_manager.World.EntityManager, position, addingItem);
 
             if (leftItem != null) {
                 EntityItem.DropItem(_manager.World.EntityManager, position, leftItem);
@@ -26,6 +26,7 @@ namespace Player {
         }
 
         public void Start() {
+            Craft = new CraftManager(this);
             _manager = gameManager.GetComponent<GameManager>();
         }
 

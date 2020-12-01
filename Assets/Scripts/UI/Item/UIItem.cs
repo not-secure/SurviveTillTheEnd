@@ -10,6 +10,7 @@ namespace UI.Item {
     public class UIItem: MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
         public GameObject imageObject;
         public GameObject countObject;
+        public bool draggable = true;
 
         [NonSerialized] public UISlot Slot;
         [NonSerialized] public ItemBase Item;
@@ -35,10 +36,14 @@ namespace UI.Item {
         }
 
         public void OnDrag(PointerEventData eventData) {
+            if (!draggable) return;
+            
             transform.position = eventData.position;
         }
 
         public void OnBeginDrag(PointerEventData eventData) {
+            if (!draggable) return;
+            
             DraggedItem = this;
             
             _parent = transform.parent;
@@ -49,6 +54,8 @@ namespace UI.Item {
         }
 
         public void OnEndDrag(PointerEventData eventData) {
+            if (!draggable) return;
+            
             DraggedItem = null;
             
             var t = transform;
