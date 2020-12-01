@@ -20,6 +20,11 @@ namespace Common {
         public int changePeriod = 100;
         public DayStatus dayStatus;
 
+        public void OnEnable() {
+            Player = playerObject.GetComponent<PlayerController>();
+            World = worldManagerObject.GetComponent<WorldManager>();
+        }
+
         public void Update()
         {
             if (Input.GetKeyDown(KeyCode.K))
@@ -33,9 +38,6 @@ namespace Common {
             time = 0;
             dayStatus = DayStatus.Day;
             daylightObject.transform.Rotate(new Vector3(180, 0, 0));
-
-            Player = playerObject.GetComponent<PlayerController>();
-            World = worldManagerObject.GetComponent<WorldManager>();
 
             StartCoroutine(UpdateGame());
             Debug.Log("Starting game...");

@@ -18,10 +18,11 @@ namespace Player {
         public void GiveItemOrDrop(ItemBase addingItem) {
             var leftItem = Inventory.AddItem(addingItem);
             var position = transform.position;
-            var entityItem = _manager.World.EntityManager.SpawnEntity<EntityItem>(
-                position.x, position.y, position.z
-            );
-            entityItem.SetItem(leftItem);
+            EntityItem.DropItem(_manager.World.EntityManager, position, addingItem);
+
+            if (leftItem != null) {
+                EntityItem.DropItem(_manager.World.EntityManager, position, leftItem);
+            }
         }
 
         public void Start() {
@@ -36,10 +37,10 @@ namespace Player {
             gameObject.transform.Rotate(new Vector3(0, 0, horizontal));
 
             if (Input.GetKey(KeyCode.Alpha1)) {
-                Inventory.AddItem(new ItemPlank(10));
+                GiveItemOrDrop(new ItemPlank(10));
             }
             if (Input.GetKey(KeyCode.Alpha2)) {
-                Inventory.AddItem(new ItemSilver(10));
+                GiveItemOrDrop(new ItemSilver(10));
             }
             if (Input.GetKey(KeyCode.Alpha3)) {
                 Inventory.RemoveItem(new ItemPlank(10));
