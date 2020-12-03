@@ -8,17 +8,20 @@ namespace UI.Inventory {
     public class UIInventory: MonoBehaviour {
         public GameObject slot;
         public GameObject craft;
-        public GameObject scrollPane;
+        public GameObject availableCraft;
+        public GameObject unavailableCraft;
         
         private PlayerController _player;
         private global::Item.Inventory _inventory;
         private readonly UISlot[] _slots = new UISlot[30];
+        private UICraft[] _recipes;
 
         private void OnEnable() {
             var player = GameObject.FindGameObjectWithTag("Player");
             _player = player.GetComponent<PlayerController>();
             _inventory = _player.Inventory;
-            _inventory.OnChange += OnChange;
+            _inventory.OnChange += OnInventoryChange;
+            _player.Craft.OnAvailRecipeChange += OnAvailRecipeChange;
 
             InitializeSlots();
             InitializeRecipes();
@@ -54,24 +57,52 @@ namespace UI.Inventory {
 
         private void InitializeRecipes() {
             var recipes = _player.Craft.GetRecipes();
-            var y = -40;
-            foreach (var recipe in recipes) {
-                var craftObject = Instantiate(craft, scrollPane.transform);
+            _recipes = new UICraft[recipes.Length];
+
+            for (var i = 0; i < recipes.Length; i++) {
+                var recipe = recipes[i];
+                var craftObject = Instantiate(craft, availableCraft.transform);
                 
                 var craftUi = craftObject.GetComponent<UICraft>();
                 craftUi.InitializeRecipe(recipe, _player.Craft);
+                _recipes[i] = craftUi;
+            }
+            
+            UpdateRecipes();
+        }
+
+        private void UpdateRecipes() {
+            var craftManager = _player.Craft;
+            var recipes = craftManager.GetRecipes();
+
+            for (var i = 0; i < recipes.Length; i++) {
+                var recipe = recipes[i];
+                var recipeObject = _recipes[i];
+
+                recipeObject.transform.SetParent(
+                    craftManager.Available(recipe)
+                    ? availableCraft.transform
+                    : unavailableCraft.transform
+                );
+                recipeObject.SetAvailability(craftManager.Available(recipe));
             }
         }
 
-        private void OnChange(global::Item.Inventory inv, InventoryEventArgs e) {
+        private void OnInventoryChange(global::Item.Inventory inv, InventoryEventArgs e) {
             var i = e.Index;
             var uiSlot = _slots[i];
             var invItem = _inventory.Get(i);
             uiSlot.SetItem(invItem);
+            UpdateRecipes();
+        }
+
+        private void OnAvailRecipeChange(CraftManager manager) {
+            UpdateRecipes();
         }
 
         public void OnDisable() {
-            _inventory.OnChange -= OnChange;
+            _inventory.OnChange -= OnInventoryChange;
+            _player.Craft.OnAvailRecipeChange -= OnAvailRecipeChange;
         }
     }
 }

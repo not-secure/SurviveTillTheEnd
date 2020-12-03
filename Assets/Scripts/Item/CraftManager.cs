@@ -110,7 +110,7 @@ namespace Item {
                 .All(req => _player.Inventory.GetCount(req.ItemId) >= req.Count);
         }
 
-        public event AvailRecipeChangeEventHandler AvailRecipeChangeEvent;
+        public event AvailRecipeChangeEventHandler OnAvailRecipeChange;
 
         public delegate void AvailRecipeChangeEventHandler(CraftManager sender);
     }
