@@ -47,5 +47,41 @@ namespace Player {
                 Inventory.RemoveItem(new ItemPlank(10));
             }
         }
+
+        public void SetDead() {
+            // TODO
+        }
+
+        private int _maxHealth = 100;
+        public int MaxHealth {
+            get => _maxHealth;
+            set {
+                _maxHealth = value;
+                if (Health > _maxHealth) Health = _maxHealth;
+            }
+        }
+
+        private int _health = 100;
+        public int Health {
+            get => _health;
+            set {
+                _health = value;
+                if (_health <= 0) {
+                    SetDead();
+                }
+            }
+        }
+
+        private int _maxStamina = 100;
+
+        public int MaxStamina {
+            get => _maxStamina;
+            set {
+                _maxStamina = value;
+                if (Stamina > _maxStamina) Stamina = _maxStamina;
+            }
+        }
+
+        public int Stamina = 100;
     }
 }

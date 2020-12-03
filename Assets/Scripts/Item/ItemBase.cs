@@ -27,7 +27,7 @@ namespace Item {
         public virtual void UseItem() {}
 
         public object Clone() {
-            return (ItemBase) Activator.CreateInstance(this.GetType(), new [] { Count });
+            return (ItemBase) Activator.CreateInstance(this.GetType(), new object[] { Count });
         }
     }
 }

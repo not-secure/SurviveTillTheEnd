@@ -9,12 +9,20 @@ namespace UI.Inventory {
         public GameObject item;
 
         private Image _img;
+        private Button _button;
+        private CraftManager _manager;
+        private CraftRecipe _recipe;
 
         public void OnEnable() {
             _img = GetComponent<Image>();
+            _button = GetComponent<Button>();
+            _button.onClick.AddListener(OnClick);
         }
 
         public void InitializeRecipe(CraftRecipe craft, CraftManager manager) {
+            _recipe = craft;
+            _manager = manager;
+            
             var x = -60;
             foreach (var recipeItem in craft.Recipe) {
                 AddItem(recipeItem, x);
@@ -42,6 +50,10 @@ namespace UI.Inventory {
             
             var itemController = itemObject.GetComponent<UIItem>();
             itemController.SetItem(addingItem);
+        }
+
+        private void OnClick() {
+            _manager.Craft(_recipe);
         }
     }
 }
