@@ -13,18 +13,20 @@ namespace Player {
         public GameObject gameManager;
 
         private GameManager _manager;
+        public CraftManager Craft;
         public readonly Inventory Inventory = new Inventory(30);
 
         public void GiveItemOrDrop(ItemBase addingItem) {
             var leftItem = Inventory.AddItem(addingItem);
             var position = transform.position;
-            var entityItem = _manager.World.EntityManager.SpawnEntity<EntityItem>(
-                position.x, position.y, position.z
-            );
-            entityItem.SetItem(leftItem);
+
+            if (leftItem != null) {
+                EntityItem.DropItem(_manager.World.EntityManager, position, leftItem);
+            }
         }
 
         public void Start() {
+            Craft = new CraftManager(this);
             _manager = gameManager.GetComponent<GameManager>();
         }
 
@@ -36,8 +38,50 @@ namespace Player {
             gameObject.transform.Rotate(new Vector3(0, 0, horizontal));
 
             if (Input.GetKey(KeyCode.Alpha1)) {
-                Inventory.AddItem(new ItemPlank(10));
+                GiveItemOrDrop(new ItemPlank(10));
+            }
+            if (Input.GetKey(KeyCode.Alpha2)) {
+                GiveItemOrDrop(new ItemSilver(10));
+            }
+            if (Input.GetKey(KeyCode.Alpha3)) {
+                Inventory.RemoveItem(new ItemPlank(10));
             }
         }
+
+        public void SetDead() {
+            // TODO
+        }
+
+        private int _maxHealth = 100;
+        public int MaxHealth {
+            get => _maxHealth;
+            set {
+                _maxHealth = value;
+                if (Health > _maxHealth) Health = _maxHealth;
+            }
+        }
+
+        private int _health = 100;
+        public int Health {
+            get => _health;
+            set {
+                _health = value;
+                if (_health <= 0) {
+                    SetDead();
+                }
+            }
+        }
+
+        private int _maxStamina = 100;
+
+        public int MaxStamina {
+            get => _maxStamina;
+            set {
+                _maxStamina = value;
+                if (Stamina > _maxStamina) Stamina = _maxStamina;
+            }
+        }
+
+        public int Stamina = 100;
     }
 }

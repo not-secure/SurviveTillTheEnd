@@ -1,23 +1,20 @@
 ﻿using System.Collections.Generic;
 
 namespace Item {
-    public readonly struct CraftItem {
-        public CraftItem(int itemId, int count) {
-            ItemId = itemId;
-            Count = count;
-        }
-        
-        public int ItemId { get; }
-        public int Count { get; }
-    }
+    public enum RecipeType {
+        None,
+        Table
+    };
     
     public readonly struct CraftRecipe {
-        public CraftRecipe(List<CraftItem> recipe, CraftItem result) {
+        public CraftRecipe(List<ItemBase> recipe, ItemBase result, RecipeType type) {
             Recipe = recipe;
             Result = result;
+            Type = type;
         }
 
-        public List<CraftItem> Recipe { get; }
-        public CraftItem Result { get; }
+        public List<ItemBase> Recipe { get; }
+        public ItemBase Result { get; }
+        public RecipeType Type { get; }
     }
 }

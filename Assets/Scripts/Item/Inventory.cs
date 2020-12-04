@@ -105,6 +105,9 @@ namespace Item {
 
                 // Start actual deletion
                 item.Count -= delAmount;
+                if (item.Count == 0) {
+                    _items[i] = null;
+                }
                 OnChange?.Invoke(this, new InventoryEventArgs(i));
                 break;
             }
@@ -131,13 +134,13 @@ namespace Item {
 
         public int GetCount(int itemId) {
             return _items
-                .Where(item => item.ItemId == itemId)
+                .Where(item => item != null && item.ItemId == itemId)
                 .Sum(item => item.Count);
         }
 
         public int GetCount(ItemType type) {
             return _items
-                .Where(item => item.Type.Contains(type))
+                .Where(item => item != null && item.Type.Contains(type))
                 .Sum(item => item.Count);
         }
 

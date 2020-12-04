@@ -3,6 +3,7 @@
         None,
         Burnable,
         Wooden,
+        Silver,
         Pickaxe
     }
 }
