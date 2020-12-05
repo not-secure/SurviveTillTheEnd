@@ -25,19 +25,20 @@ namespace World
 
         public void GenerateNeighborChunk(Chunk chunk)
         {
-            Vector2 distanceVector = playerPosition - chunk.position;
-            float distance = Mathf.Sqrt(Mathf.Pow(distanceVector.x, 2) + Mathf.Pow(distanceVector.y, 2));
+            var distanceVector = playerPosition - chunk.Position;
+            var distance = distanceVector.magnitude;
             if (distance > maxDistanceFromPlayer)
                 return;
 
-            if (chunkMap.ContainsKey(chunk.position))
+            if (chunkMap.ContainsKey(chunk.Position))
                 return;
 
-            chunkMap[chunk.position] = chunk;
+            chunk.Generate();
+            chunkMap[chunk.Position] = chunk;
 
-            Vector2Int[] dir = new Vector2Int[4] { new Vector2Int(0, 1), new Vector2Int(0, -1), new Vector2Int(-1, 0), new Vector2Int(1, 0) };
-            for (int i = 0; i < 4; i++)
-                GenerateNeighborChunk(new Chunk(chunk.position + dir[i], chunk.type));
+            var dir = new Vector2Int[4] { new Vector2Int(0, 1), new Vector2Int(0, -1), new Vector2Int(-1, 0), new Vector2Int(1, 0) };
+            for (var i = 0; i < 4; i++)
+                GenerateNeighborChunk(new Chunk(chunk.Position + dir[i], chunk.type));
         }
 
         public void Start()

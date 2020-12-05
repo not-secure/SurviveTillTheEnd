@@ -5,19 +5,25 @@ using UnityEngine;
 [System.Serializable]
 public class Chunk
 {
-    public Vector2Int position;
-    public Vector2Int size;
+    public Vector2Int Position;
+    public Vector2Int Size = new Vector2Int(30, 30);
     public int type;
     public GameObject gameObject;
 
-    public Chunk(Vector2Int position, int type)
-    {
-        this.position = position;
+    private int _variant;
+    
+    public Chunk(Vector2Int position, int type) {
+        this.Position = position;
         this.type = type;
-        size = new Vector2Int(1, 1);
 
-        int randInt = Random.Range(1, 5);
-        gameObject = Object.Instantiate(Resources.Load<GameObject>("Chunks/" + type.ToString() + "_type/" + randInt + "_num"));
-        gameObject.transform.position = new Vector3(position.x * 5, 0, position.y * 5);
+        _variant = Random.Range(1, 5);
+    }
+
+    public void Generate() {
+        gameObject = Object.Instantiate(
+            Resources.Load<GameObject>("Chunks/" + type.ToString() + "_type/" + _variant + "_num")
+        );
+        
+        gameObject.transform.position = new Vector3(Position.x * Size.x, 0, Position.y * Size.y);
     }
 }
