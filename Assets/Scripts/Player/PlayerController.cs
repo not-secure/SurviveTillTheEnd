@@ -2,6 +2,7 @@
 using Entity.Neutral;
 using Item;
 using Item.Items;
+using UI.Status;
 using UnityEngine;
 
 namespace Player {
@@ -36,16 +37,6 @@ namespace Player {
 
             gameObject.transform.Translate(new Vector3(0, vertical * Time.deltaTime, 0));
             gameObject.transform.Rotate(new Vector3(0, 0, horizontal));
-
-            if (Input.GetKey(KeyCode.Alpha1)) {
-                GiveItemOrDrop(new ItemPlank(10));
-            }
-            if (Input.GetKey(KeyCode.Alpha2)) {
-                GiveItemOrDrop(new ItemSilver(10));
-            }
-            if (Input.GetKey(KeyCode.Alpha3)) {
-                Inventory.RemoveItem(new ItemPlank(10));
-            }
         }
 
         public void SetDead() {
