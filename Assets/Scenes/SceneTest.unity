@@ -437,8 +437,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1072541559}
   - {fileID: 1617468907}
+  - {fileID: 1072541559}
   - {fileID: 1125494333}
   m_Father: {fileID: 0}
   m_RootOrder: 7
@@ -571,7 +571,7 @@ GameObject:
   - component: {fileID: 1125494336}
   m_Layer: 5
   m_Name: StatusManager
-  m_TagString: Untagged
+  m_TagString: StatusManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -594,7 +594,7 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 220}
   m_SizeDelta: {x: 400, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1125494334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -627,7 +627,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 7
-  m_Spacing: 0
+  m_Spacing: 5
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -647,7 +647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5283b8f487964a48aab3d2df0d54f47f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progress: {fileID: 4312684387439885380, guid: b8276c321188a7140b1b203263658d2d, type: 3}
+  progress: {fileID: 5683911041612463479, guid: eed3b6f0a14f9784aaa3af78df5b6191, type: 3}
   text: {fileID: 4312684387439885380, guid: 5a25c1a763ac22d4c8161377820cd858, type: 3}
 --- !u!1 &1141767663
 GameObject:
@@ -695,7 +695,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 469351093}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -715,6 +715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 7895213300251719331, guid: 0d3f801b43a3f3246a54e084e113cabb, type: 3}
+  dialog: {fileID: 0}
 --- !u!1 &1700585871
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,7 +951,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8135111382037156845, guid: 4f258b5318820b64e9f0433723394da1, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8135111382037156845, guid: 4f258b5318820b64e9f0433723394da1, type: 3}
       propertyPath: m_AnchorMax.x

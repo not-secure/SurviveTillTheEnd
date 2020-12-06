@@ -1,8 +1,6 @@
 ﻿using Common;
 using Entity.Neutral;
 using Item;
-using Item.Items;
-using UI.Status;
 using UnityEngine;
 
 namespace Player {

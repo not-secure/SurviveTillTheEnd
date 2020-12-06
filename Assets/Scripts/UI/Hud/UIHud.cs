@@ -15,6 +15,7 @@ namespace UI.Hud {
         private readonly UISlot[] _slots = new UISlot[6];
         private UIProgress _healthBar;
         private UIProgress _staminaBar;
+        private string[] _shortcutNames = new[] { "CTRL", "SHIFT", "Q", "E", "R", "F" };
 
         private void OnEnable() {
             var player = GameObject.FindGameObjectWithTag("Player");
@@ -45,6 +46,9 @@ namespace UI.Hud {
                 var slotController = slotObject.GetComponent<UISlot>();
                 slotController.Inventory = _inventory;
                 slotController.InventorySlot = i;
+
+                var slotKeyController = slotObject.GetComponent<UIHudSlot>();
+                slotKeyController.SetShortcut(_shortcutNames[i]);
 
                 var position = slotObject.transform.localPosition;
                 position.x = x;
