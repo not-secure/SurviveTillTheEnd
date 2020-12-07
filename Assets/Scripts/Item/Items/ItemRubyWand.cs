@@ -36,7 +36,9 @@ namespace Item.Items {
 
             for (var i = 0; i < 3; i++) {
                 position += direction * 3;
-                player.Entities.SpawnEntity<EntityFireProjectile>(position.x, position.y, position.z);
+                var entity = player.Entities.SpawnEntity<EntityFireProjectile>(position.x, position.y, position.z);
+                entity.Motion += direction * 0.1f;
+                
                 yield return new WaitForSeconds(0.5f);
             }
         }

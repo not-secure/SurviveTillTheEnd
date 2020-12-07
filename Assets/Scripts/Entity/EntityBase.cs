@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using World;
+using Object = UnityEngine.Object;
 
 namespace Entity {
     public abstract class EntityBase {
@@ -10,23 +12,36 @@ namespace Entity {
         public GameObject Entity;
         public EntityManager EntityManager;
         public WorldManager World;
-        public Vector3 Motion;
+        public Vector3 Motion = Vector3.zero;
 
         public Vector3 Position => this.Entity.transform.position;
         public int x => Mathf.RoundToInt(this.Position.x / World.Width);
         public int y => Mathf.RoundToInt(this.Position.y / World.Height);
 
+        
+        protected CharacterController Controller;
+        protected Rigidbody Rigidbody;
+
         public virtual void OnInit() {
-            
+            Controller = Entity.GetComponent<CharacterController>();
+            Rigidbody = Entity.GetComponent<Rigidbody>();
         }
         
         public virtual void OnTick() { }
 
         public virtual void OnFixedTick() {
             Motion *= (1 - Friction);
-            this.Entity.transform.position += Motion;
+            if (Controller)
+                Controller.Move(Motion);
+            else if (Rigidbody)
+                Rigidbody.MovePosition(Entity.transform.position + Motion);
+            else
+                Entity.transform.position += Motion;
         }
+        
+        public virtual void OnCollisionEnter(GameObject other) { }
 
+        [Obsolete]
         public virtual bool MoveTowards(Vector2Int target) {
             var position = this.Entity.transform.position;
             
@@ -56,7 +71,10 @@ namespace Entity {
             controller.Entity = this;
         }
 
-        public virtual void OnDead() { }
+        public virtual void OnDead() {
+            if (Entity)
+                Object.Destroy(Entity);
+        }
 
         public void Kill() {
             EntityManager.KillEntity(this);

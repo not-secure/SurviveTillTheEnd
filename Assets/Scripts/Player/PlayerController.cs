@@ -34,6 +34,7 @@ namespace Player {
         private UIStatusManager _statusManager;
         private BlockController _interactingBlock;
         private int _interactingId;
+        private CharacterController _controller;
 
         public void Start() {
             Craft = new CraftManager(this);
@@ -46,13 +47,18 @@ namespace Player {
 
             Entities = GameObject.FindGameObjectWithTag("EntityManager")
                 .GetComponent<EntityManager>();
+
+            _controller = GetComponent<CharacterController>();
         }
 
         public void Update() {
             var horizontal = Input.GetAxis("Horizontal") * rotateSpeed;
             var vertical = Input.GetAxis("Vertical") * moveSpeed * -1;
 
-            gameObject.transform.Translate(new Vector3(0, vertical * Time.deltaTime, 0));
+            _controller.Move(
+                gameObject.transform.rotation *
+                new Vector3(0, vertical * Time.deltaTime, -9.8f * Time.deltaTime)
+            );
             gameObject.transform.Rotate(new Vector3(0, 0, horizontal));
 
             for (var i = 0; i < 6; i++) {

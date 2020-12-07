@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 8432302759166268664}
   - component: {fileID: 8432302759166268647}
   - component: {fileID: 8432302759166268646}
-  - component: {fileID: 8432302759166268645}
-  - component: {fileID: 3743226818457684901}
+  - component: {fileID: 7825673773458183949}
+  - component: {fileID: 4310941048629376990}
   m_Layer: 0
-  m_Name: DiamondProjectile
+  m_Name: IceProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,7 +99,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &8432302759166268645
+--- !u!114 &7825673773458183949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8432302759166268644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d994697e8414491a845aab05cd25f768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &4310941048629376990
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,23 +122,11 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3743226818457684901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8432302759166268644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c03208ed88640feb20c6eb5b1e6bd96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &4913659970945801056
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,5 +12,13 @@ namespace Entity {
         public void FixedUpdate() {
             Entity?.OnFixedTick();
         }
+
+        public void OnCollisionEnter(Collision other) {
+            Entity?.OnCollisionEnter(other.gameObject);
+        }
+
+        public void OnControllerColliderHit(ControllerColliderHit hit) {
+            Entity?.OnCollisionEnter(hit.gameObject);
+        }
     }
 }

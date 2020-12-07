@@ -25,16 +25,15 @@ namespace Item.Items {
             var transform = player.transform;
             var position = transform.position;
             
-            var playerRot = transform.rotation.eulerAngles;
-            var rot = Quaternion.Euler(0, playerRot.y, 0);
-            var rotY = playerRot.y * Mathf.Deg2Rad;
-            
-            var ent = player.Entities.SpawnEntity<EntityDiamondProjectile>(
-                position.x, position.y + 0.5f, position.z, rot
-            );
-            ent.Motion = new Vector3(Mathf.Sin(rotY), 0, Mathf.Cos(rotY)) * 0.3f; 
+            var rot = Mathf.Deg2Rad * transform.rotation.eulerAngles.y;
 
-            var rb = ent.Entity.GetComponent<Rigidbody>();
+            var direction = new Vector3(Mathf.Sin(rot), 0, Mathf.Cos(rot));
+            position += direction;
+            
+            var ent = player.Entities.SpawnEntity<EntityIceProjectile>(
+                position.x, position.y + 1f, position.z
+            );
+            ent.Motion = direction * 0.3f; 
         }
     }
 }
