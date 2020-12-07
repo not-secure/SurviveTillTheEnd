@@ -1,4 +1,5 @@
 ﻿using System;
+using Common;
 using Item;
 using TMPro;
 using UI.Inventory;
@@ -7,7 +8,9 @@ using UnityEngine.EventSystems;
 using Image = UnityEngine.UI.Image;
 
 namespace UI.Item {
-    public class UIItem: MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+    public class UIItem: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
+                         IBeginDragHandler, IDragHandler, IEndDragHandler {
+        
         public GameObject imageObject;
         public GameObject countObject;
         public bool draggable = true;
@@ -19,6 +22,7 @@ namespace UI.Item {
         private TextMeshProUGUI _mesh;
         private Transform _canvas;
         private Transform _parent;
+        private UIItemDescriptionManager _description;
 
         public static UISlot DraggedSlot;
         public static UIItem DraggedItem;
@@ -27,6 +31,8 @@ namespace UI.Item {
             _canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
             _image = imageObject.GetComponent<Image>();
             _mesh = countObject.GetComponent<TextMeshProUGUI>();
+            _description = GameObject.FindGameObjectWithTag("ItemDescriptionManager")
+                .GetComponent<UIItemDescriptionManager>();
         }
         
         public void SetItem(ItemBase newItem) {
@@ -92,6 +98,14 @@ namespace UI.Item {
 
             Slot.Inventory.Set(Slot.InventorySlot, changingItem);
             DraggedSlot.Inventory.Set(DraggedSlot.InventorySlot, currentItem);
+        }
+
+        public void OnPointerEnter(PointerEventData eventData) {
+            _description.ShowItem(Item, eventData.position);
+        }
+
+        public void OnPointerExit(PointerEventData eventData) {
+            _description.HideItem(Item);
         }
     }
 }

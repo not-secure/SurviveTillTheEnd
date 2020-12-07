@@ -7,6 +7,9 @@ TagManager:
   - Canvas
   - GameManager
   - StatusManager
+  - WorldManager
+  - EntityManager
+  - ItemDescriptionManager
   layers:
   - Default
   - TransparentFX

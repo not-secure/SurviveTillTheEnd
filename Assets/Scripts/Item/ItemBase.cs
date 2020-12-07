@@ -15,6 +15,7 @@ namespace Item {
         public abstract int MaxStack { get; }
         public abstract ItemType[] Type { get; }
         public abstract string Name { get; }
+        public abstract string Description { get; }
 
         public Sprite GetImage() {
             return CachedResources.Load<Sprite>(GetTextureKey());
