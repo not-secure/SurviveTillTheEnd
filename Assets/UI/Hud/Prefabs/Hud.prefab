@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71f9bee78ae848e79f5ec4cfc7ec0e3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slot: {fileID: 2632472345042849104, guid: c3330c29eb69a7e4aaee1602c943f074, type: 3}
+  slot: {fileID: 2382069708635928634, guid: bd7897c022bb1fc45aeca0946f9a983d, type: 3}
   healthBar: {fileID: 8135111382962127739}
   staminaBar: {fileID: 5421211532712532217}
 --- !u!1 &8135111382199880120

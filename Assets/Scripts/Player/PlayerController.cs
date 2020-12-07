@@ -1,8 +1,12 @@
-﻿using Common;
+﻿using System.Linq;
+using Block;
+using Common;
+using Entity;
 using Entity.Neutral;
 using Item;
-using Item.Items;
+using UI.Status;
 using UnityEngine;
+using World;
 
 namespace Player {
     public class PlayerController : MonoBehaviour
@@ -12,42 +16,90 @@ namespace Player {
 
         public GameObject gameManager;
 
-        private GameManager _manager;
         public CraftManager Craft;
+        public WorldManager World;
+        public EntityManager Entities;
         public readonly Inventory Inventory = new Inventory(30);
+        
+        private GameManager _manager;
+        private UIStatusManager _statusManager;
+        private BlockController _interactingBlock;
+        private int _interactingId;
+
+        public void Start() {
+            Craft = new CraftManager(this);
+
+            _manager = gameManager.GetComponent<GameManager>();
+            World = _manager.World;
+
+            _statusManager = GameObject.FindGameObjectWithTag("StatusManager")
+                .GetComponent<UIStatusManager>();
+
+            Entities = GameObject.FindGameObjectWithTag("EntityManager")
+                .GetComponent<EntityManager>();
+        }
+
+        public void Update() {
+            var horizontal = Input.GetAxis("Horizontal") * rotateSpeed;
+            var vertical = Input.GetAxis("Vertical") * moveSpeed * -1;
+
+            gameObject.transform.Translate(new Vector3(0, vertical * Time.deltaTime, 0));
+            gameObject.transform.Rotate(new Vector3(0, 0, horizontal));
+
+            if (_interactingBlock) {
+                // Cancel if key is no longer pressed, or player is too far
+                if (Input.GetKey(KeyCode.Space) && _interactingBlock.CanInteract(this))
+                    return;
+                
+                _statusManager.CancelItem(_interactingId);
+                _interactingBlock = null;
+                _interactingId = -1;
+            } else {
+                if (!Input.GetKey(KeyCode.Space)) return;
+                // Start interaction
+                
+                var interactableBlock = GetInteractableBlock();
+                if (!interactableBlock) return;
+                
+                _interactingBlock = interactableBlock;
+                _interactingId = _statusManager.AddProgress(
+                    _interactingBlock.GetInteractProgress(this), 
+                    _interactingBlock.GetInteractDuration(this), 
+                    OnInteractFinish
+                );
+            }
+        }
+
+        public BlockController GetInteractableBlock() {
+            var playerChunk = World.PlayerChunk;
+            
+            foreach (var block in playerChunk.ActiveBlocks())
+                if (block.CanInteract(this))
+                    return block;
+            
+            var chunks = World.GetNeighborChunks(playerChunk);
+            return chunks
+                .SelectMany(chunk => chunk.ActiveBlocks())
+                .FirstOrDefault(block => block.CanInteract(this));
+        }
+
+        private void OnInteractFinish() {
+            _interactingId = -1;
+            var finishedBlock = _interactingBlock;
+            _interactingBlock = null;
+            
+            finishedBlock.OnInteract(this);
+        }
 
         public void GiveItemOrDrop(ItemBase addingItem) {
             var leftItem = Inventory.AddItem(addingItem);
             var position = transform.position;
 
             if (leftItem != null) {
-                EntityItem.DropItem(_manager.World.EntityManager, position, leftItem);
+                EntityItem.DropItem(Entities, position, leftItem);
             }
         }
-
-        public void Start() {
-            Craft = new CraftManager(this);
-            _manager = gameManager.GetComponent<GameManager>();
-        }
-
-        public void Update() {
-            float horizontal = Input.GetAxis("Horizontal") * rotateSpeed;
-            float vertical = Input.GetAxis("Vertical") * moveSpeed * -1;
-
-            gameObject.transform.Translate(new Vector3(0, vertical * Time.deltaTime, 0));
-            gameObject.transform.Rotate(new Vector3(0, 0, horizontal));
-
-            if (Input.GetKey(KeyCode.Alpha1)) {
-                GiveItemOrDrop(new ItemPlank(10));
-            }
-            if (Input.GetKey(KeyCode.Alpha2)) {
-                GiveItemOrDrop(new ItemSilver(10));
-            }
-            if (Input.GetKey(KeyCode.Alpha3)) {
-                Inventory.RemoveItem(new ItemPlank(10));
-            }
-        }
-
+        
         public void SetDead() {
             // TODO
         }

@@ -11,7 +11,7 @@ namespace UI.Dialog {
         }
 
         private static void OnClick() {
-            DialogManager.Close();
+            UIDialogManager.Close();
         }
     }
 }
