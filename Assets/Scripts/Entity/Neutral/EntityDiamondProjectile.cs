@@ -8,10 +8,10 @@ namespace Entity.Neutral {
 
         public override void OnInit() {
             base.OnInit();
+            Friction = 0.0f;
             
             var rb = Entity.GetComponent<Rigidbody>();
-            rb.useGravity = false;
-            rb.drag = 0.0f;
+            rb.isKinematic = true;
         }
     }
 }

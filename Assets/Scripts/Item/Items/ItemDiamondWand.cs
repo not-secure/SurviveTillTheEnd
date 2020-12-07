@@ -22,13 +22,19 @@ namespace Item.Items {
         public override void OnUseItem(PlayerController player) {
             base.OnUseItem(player);
 
-            var position = player.transform.position;
-            var ent = player.Entities.SpawnEntity<EntityDiamondProjectile>(position.x, position.y, position.z);
-            var rb = ent.Entity.GetComponent<Rigidbody>();
+            var transform = player.transform;
+            var position = transform.position;
+            
+            var playerRot = transform.rotation.eulerAngles;
+            var rot = Quaternion.Euler(0, playerRot.y, 0);
+            var rotY = playerRot.y * Mathf.Deg2Rad;
+            
+            var ent = player.Entities.SpawnEntity<EntityDiamondProjectile>(
+                position.x, position.y + 0.5f, position.z, rot
+            );
+            ent.Motion = new Vector3(Mathf.Sin(rotY), 0, Mathf.Cos(rotY)) * 0.3f; 
 
-            var rot = player.transform.rotation.y;
-            var force = new Vector3(Mathf.Cos(rot), 0, Mathf.Sin(rot));
-            rb.AddForce(force * 3.0f);
+            var rb = ent.Entity.GetComponent<Rigidbody>();
         }
     }
 }

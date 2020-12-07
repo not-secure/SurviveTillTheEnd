@@ -1,18 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class SingletonMonoBehaviour : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
+namespace Common {
+    public class SingletonMonoBehaviour : MonoBehaviour {
         
-    }
+        private static SingletonMonoBehaviour _self;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Start() {
+            _self = this;
+        }
+
+        public static SingletonMonoBehaviour GetInstance() {
+            return _self;
+        }
     }
 }

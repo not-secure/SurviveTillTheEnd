@@ -29,7 +29,8 @@ namespace Entity {
             var id = GetLastEntityId();
             var entity = new TEntity {
                 ID = id,
-                World = _world
+                World = _world,
+                EntityManager = this
             };
             entity.Spawn(transform);
             entity.Entity.transform.position = new Vector3(x, y, z);
@@ -40,6 +41,11 @@ namespace Entity {
             _entities.Add(id, entity);
 
             return entity;
+        }
+
+        public void KillEntity(EntityBase ent) {
+            _entities.Remove(ent.ID);
+            ent.OnDead();
         }
 
         private int GetLastEntityId() {

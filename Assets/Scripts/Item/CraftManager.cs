@@ -23,6 +23,12 @@ namespace Item {
                 RecipeType.None
             ));
             
+            AddRecipe(new CraftRecipe(
+                new List<ItemBase>() { },
+                new ItemRubyWand(1), 
+                RecipeType.None
+            ));
+            
         }
 
         public void AddRecipe(CraftRecipe recipe) {

@@ -3,11 +3,12 @@ using World;
 
 namespace Entity {
     public abstract class EntityBase {
-        public readonly float Friction = .2f;
-        public readonly float Speed = 1f;
+        public float Friction = .2f;
+        public float Speed = 1f;
         
         public int ID = -1;
         public GameObject Entity;
+        public EntityManager EntityManager;
         public WorldManager World;
         public Vector3 Motion;
 
@@ -19,7 +20,9 @@ namespace Entity {
             
         }
         
-        public virtual void OnTick() {
+        public virtual void OnTick() { }
+
+        public virtual void OnFixedTick() {
             Motion *= (1 - Friction);
             this.Entity.transform.position += Motion;
         }
@@ -51,6 +54,12 @@ namespace Entity {
             
             var controller = Entity.GetComponent<EntityController>();
             controller.Entity = this;
+        }
+
+        public virtual void OnDead() { }
+
+        public void Kill() {
+            EntityManager.KillEntity(this);
         }
     }
 }

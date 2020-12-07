@@ -8,5 +8,9 @@ namespace Entity {
         public void Update() {
             Entity?.OnTick();
         }
+
+        public void FixedUpdate() {
+            Entity?.OnFixedTick();
+        }
     }
 }
