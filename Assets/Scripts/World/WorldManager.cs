@@ -76,6 +76,7 @@ namespace World
             var position = PlayerPosition;
             if (_lastPosition != position) {
                 GenerateNeighborChunks(PlayerChunk);
+                _lastPosition = position;
             }
         }
         

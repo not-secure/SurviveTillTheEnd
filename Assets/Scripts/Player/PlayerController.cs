@@ -20,6 +20,15 @@ namespace Player {
         public WorldManager World;
         public EntityManager Entities;
         public readonly Inventory Inventory = new Inventory(30);
+
+        public KeyCode[] keyMap = new[] {
+            KeyCode.LeftControl,
+            KeyCode.LeftShift,
+            KeyCode.Q,
+            KeyCode.E,
+            KeyCode.R,
+            KeyCode.F
+        };
         
         private GameManager _manager;
         private UIStatusManager _statusManager;
@@ -45,6 +54,14 @@ namespace Player {
 
             gameObject.transform.Translate(new Vector3(0, vertical * Time.deltaTime, 0));
             gameObject.transform.Rotate(new Vector3(0, 0, horizontal));
+
+            for (var i = 0; i < 6; i++) {
+                var key = keyMap[i];
+                if (!Input.GetKey(key)) continue;
+                
+                var item = Inventory.Get(i);
+                item?.UseItem(this);
+            }
 
             if (_interactingBlock) {
                 // Cancel if key is no longer pressed, or player is too far
