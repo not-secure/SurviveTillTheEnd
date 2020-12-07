@@ -7,7 +7,8 @@
         public override int MaxStack => 64;
         public override ItemType[] Type => new ItemType[] { ItemType.Silver };
         public override string Name => "Silver";
-        
+        public override string Description => "This deserves as a great material";
+
         protected override string GetTextureKey() {
             return "Sprites/Items/Ore & Gem/Silver Ingot";
         }

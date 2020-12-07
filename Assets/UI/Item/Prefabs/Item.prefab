@@ -195,6 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageObject: {fileID: 5101404677197925610}
   countObject: {fileID: 3088356269515859696}
+  descriptionObject: {fileID: 0}
   draggable: 1
 --- !u!1 &5101404677197925610
 GameObject:

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using UI.Item;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -22,7 +24,13 @@ namespace UI.Dialog {
     public class UIDialogManager: MonoBehaviour {
         public GameObject inventory;
         public GameObject dialog;
+        private static UIItemDescriptionManager _itemDescription;
         private static readonly Stack<DialogItem> CurrentDialog = new Stack<DialogItem>();
+
+        private void OnEnable() {
+            _itemDescription = GameObject.FindGameObjectWithTag("ItemDescriptionManager")
+                .GetComponent<UIItemDescriptionManager>();
+        }
 
         public void Update() {
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -42,6 +50,9 @@ namespace UI.Dialog {
 
         public static void Close() {
             if (CurrentDialog.Count <= 0) return;
+            
+            if (_itemDescription)
+                _itemDescription.HideItem(null);
             
             Object.Destroy(CurrentDialog.Pop().Dialog);
         }
