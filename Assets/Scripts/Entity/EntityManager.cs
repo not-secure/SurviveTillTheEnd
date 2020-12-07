@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using World;
 
 namespace Entity {
-    public class EntityManager {
-        private Dictionary<int, EntityBase> entities = new Dictionary<int, EntityBase>();
-        private GameObject baseEntity;
-        private WorldManager world;
+    public class EntityManager: MonoBehaviour {
+        private WorldManager _world;
+        private readonly Dictionary<int, EntityBase> _entities = new Dictionary<int, EntityBase>();
 
-        public EntityManager(WorldManager world, GameObject baseEntity) {
-            this.world = world;
-            this.baseEntity = baseEntity;
+        public void OnEnable() {
+            _world = GameObject.FindGameObjectWithTag("WorldManager")
+                .GetComponent<WorldManager>();
         }
 
         public EntityBase GetEntity(int eid) {
-            bool hasEntity = entities.TryGetValue(eid, out var entity);
-            if (hasEntity) {
-                return entity;
-            }
-
-            return null;
+            var hasEntity = _entities.TryGetValue(eid, out var entity);
+            return hasEntity ? entity : null;
         }
 
         public TEntity SpawnEntity<TEntity>(float x, float y, float z)
@@ -35,22 +29,22 @@ namespace Entity {
             var id = GetLastEntityId();
             var entity = new TEntity {
                 ID = id,
-                World = world
+                World = _world
             };
-            entity.Spawn(baseEntity.transform);
+            entity.Spawn(transform);
             entity.Entity.transform.position = new Vector3(x, y, z);
             if (rotation.HasValue) {
                 entity.Entity.transform.rotation = rotation.Value;
             }
             entity.OnInit();
-            entities.Add(id, entity);
+            _entities.Add(id, entity);
 
             return entity;
         }
 
-        public int GetLastEntityId() {
-            int i = 0;
-            while (entities.ContainsKey(i)) {
+        private int GetLastEntityId() {
+            var i = 0;
+            while (_entities.ContainsKey(i)) {
                 i++;
             }
 

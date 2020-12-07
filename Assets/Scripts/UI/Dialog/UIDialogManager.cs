@@ -19,7 +19,7 @@ namespace UI.Dialog {
         public GameObject Dialog { get; }
     }
     
-    public class DialogManager: MonoBehaviour {
+    public class UIDialogManager: MonoBehaviour {
         public GameObject inventory;
         public GameObject dialog;
         private static readonly Stack<DialogItem> CurrentDialog = new Stack<DialogItem>();
