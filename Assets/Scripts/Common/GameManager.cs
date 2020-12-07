@@ -9,16 +9,17 @@ namespace Common {
     {
         public enum DayStatus { Day, Night };
 
-        public GameObject daylightObject;
         public GameObject playerObject;
         public GameObject worldManagerObject;
 
         [NonSerialized] public PlayerController Player;
         [NonSerialized] public WorldManager World;
 
-        public int time;
+        public float time;
         public int changePeriod = 100;
         public DayStatus dayStatus;
+        public Light directionalLight;
+        public LightingPreset lightPreset;
 
         public void OnEnable() {
             Player = playerObject.GetComponent<PlayerController>();
@@ -30,14 +31,27 @@ namespace Common {
             if (Input.GetKeyDown(KeyCode.K))
                 StartGame();
 
-            daylightObject.transform.rotation = Quaternion.RotateTowards(daylightObject.transform.rotation, Quaternion.Euler(180 + ((float)time / changePeriod * -360), 0, 0), Time.deltaTime);
+            time += Time.deltaTime;
+
+            float time24h = time / changePeriod;
+
+            RenderSettings.ambientLight = lightPreset.AmbientColor.Evaluate(time24h);
+            RenderSettings.fogColor = lightPreset.FogColor.Evaluate(time24h);
+
+            if (directionalLight != null)
+            {
+                directionalLight.color = lightPreset.DirectionalColor.Evaluate(time24h);
+                directionalLight.transform.localRotation = Quaternion.Euler(new Vector3((time24h * 360f) - 90f, 170f, 0));
+            }
         }
 
         public void StartGame()
         {
             time = 0;
             dayStatus = DayStatus.Day;
-            daylightObject.transform.Rotate(new Vector3(180, 0, 0));
+
+            if (RenderSettings.sun != null && directionalLight == null)
+                directionalLight = RenderSettings.sun;
 
             StartCoroutine(UpdateGame());
             Debug.Log("Starting game...");
@@ -55,9 +69,7 @@ namespace Common {
         {
             while (true)
             {
-                time += 1;
-
-                if (time % changePeriod == 0)
+                if ((int)time % changePeriod == 0)
                     ChangeDayStatus();
 
                 yield return new WaitForSeconds(1f);
