@@ -54,6 +54,11 @@ public class EnemyManager : MonoBehaviour
         highdamageEnemy = Resources.Load<GameObject>("Prefabs/Enemys/HighDamage");
     }
 
+    public int GetCurrentNightData()
+    {
+        return waveData.data[day - 1].data.Length;
+    }
+
     public void SpawnWave(int day = -1, int num = -1)
     {
         int intDay = day != -1 ? day : this.day;
@@ -64,7 +69,7 @@ public class EnemyManager : MonoBehaviour
 
         if (intDay >= waveData.data.Length)
         {
-            intDay = 0;
+            intDay = waveData.data.Length - 1;
             intNum = 0;
         } else if (intNum >= waveData.data[intDay].data.Length)
             intNum = 0;
@@ -125,11 +130,13 @@ public class EnemyManager : MonoBehaviour
         AttackInRange(damageSource, 360, radius, damage);
     }
 
+    public void Awake()
+    {
+        LoadData();
+    }
+
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-            LoadData();
-
         if (Input.GetKeyDown(KeyCode.P))
             SpawnWave();
     }

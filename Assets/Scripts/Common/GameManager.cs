@@ -23,7 +23,9 @@ namespace Common {
         public Light directionalLight;
         public LightingPreset lightPreset;
 
-        private int _dayCounter = 0;
+        private int _dayCounter = 1;
+        private float _daySpawnGap = 0;
+        private int _prevSpawnTime = 0;
 
         public void OnEnable() {
             Player = playerObject.GetComponent<PlayerController>();
@@ -50,6 +52,16 @@ namespace Common {
                 directionalLight.color = lightPreset.DirectionalColor.Evaluate(time24h);
                 directionalLight.transform.localRotation = Quaternion.Euler(new Vector3((time24h * 360f) - 90f, 170f, 0));
             }
+
+            if (dayStatus == DayStatus.Night)
+            {
+                if ((int)time % _daySpawnGap == 0 && (int)time != _prevSpawnTime)
+                {
+                    Debug.Log("Spawing wave..." + time);
+                    Enemies.SpawnWave();
+                    _prevSpawnTime = (int)time;
+                }
+            }
         }
 
         public void StartGame()
@@ -68,6 +80,8 @@ namespace Common {
         {
             if (isNight) {
                 dayStatus = DayStatus.Night;
+                _daySpawnGap = changePeriod / 2 / Enemies.GetCurrentNightData();
+                Debug.Log("Set spawn gap: " + _daySpawnGap);
                 return;
             }
             
