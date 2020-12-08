@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Common {
     public class CheatManager: MonoBehaviour {
         public void Update() {
-            if (Input.GetKey(KeyCode.KeypadPeriod)) {
+            if (Input.GetKey(KeyCode.PageDown)) {
                 AddAllRecipes();
             }
         }
