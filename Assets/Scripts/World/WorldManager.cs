@@ -128,6 +128,10 @@ namespace World
             int day = (int)(manager.time / manager.changePeriod);
             int hrs = (int)(manager.time % manager.changePeriod / manager.changePeriod * 24);
 
+            gameOverImage.gameObject.SetActive(true);
+            gameOverTMP1.gameObject.SetActive(true);
+            gameOverTMP2.gameObject.SetActive(true);
+
             gameOverTMP2.text = "You survived for " + day + " day" + (day > 1 ? "s " : " ") + hrs + (hrs > 1 ? " hours" : " hour") + ".\n\n" + gameOverTMP2.text;
 
             Debug.Log("GameOver");
