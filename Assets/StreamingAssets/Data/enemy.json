@@ -1,0 +1,61 @@
+{
+  "data": [
+    {
+      "data": [
+        {
+          "normal": 1,
+          "highspeed": 0,
+          "highdamage": 0
+        },
+        {
+          "normal": 2,
+          "highspeed": 0,
+          "highdamage": 0
+        },
+        {
+          "normal": 3,
+          "highspeed": 0,
+          "highdamage": 0
+        }
+      ]
+    },
+    {
+      "data": [
+        {
+          "normal": 1,
+          "highspeed": 1,
+          "highdamage": 0
+        },
+        {
+          "normal": 2,
+          "highspeed": 2,
+          "highdamage": 0
+        },
+        {
+          "normal": 3,
+          "highspeed": 3,
+          "highdamage": 0
+        }
+      ]
+    },
+    {
+      "data": [
+        {
+          "normal": 1,
+          "highspeed": 1,
+          "highdamage": 1
+        },
+        {
+          "normal": 2,
+          "highspeed": 2,
+          "highdamage": 2
+        },
+        {
+          "normal": 3,
+          "highspeed": 0,
+          "highdamage": 3
+        }
+      ]
+    }
+  ]
+}
