@@ -12,7 +12,7 @@ namespace Item.Items {
         public override string Name => "Cola";
 
         public override string Description => "It does not contain any cocaine, but it does contain some sugars.\n" +
-                                              "<color=00c0ff>Recovers your health a little bit.</color>";
+                                              "<color=#00c0ff>Recovers your health a little bit.</color>";
 
         protected override string GetTextureKey() {
             return "Sprites/Items/Food/Wine 2";

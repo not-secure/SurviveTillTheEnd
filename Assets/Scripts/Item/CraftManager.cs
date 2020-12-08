@@ -12,19 +12,37 @@ namespace Item {
             _player = player;
             
             AddRecipe(new CraftRecipe(
-                new List<ItemBase>() { new ItemPlank(10), new ItemSilver(3) },
+                new List<ItemBase>() { new ItemGear(2), new ItemMagicalPowder(1) },
+                new ItemSilver(1), 
+                RecipeType.None
+            ));
+            
+            AddRecipe(new CraftRecipe(
+                new List<ItemBase>() { new ItemSilverKey(3), new ItemMagicalPowder(1) },
+                new ItemSilver(1),
+                RecipeType.None
+            ));
+            
+            AddRecipe(new CraftRecipe(
+                new List<ItemBase>() { new ItemSilver(1) },
+                new ItemCoin(1),
+                RecipeType.None
+            ));
+            
+            AddRecipe(new CraftRecipe(
+                new List<ItemBase>() { new ItemPlank(10), new ItemMagicalPowder(20) },
                 new ItemWandBase(1), 
                 RecipeType.None
             ));
             
             AddRecipe(new CraftRecipe(
-                new List<ItemBase>() { },
+                new List<ItemBase>() { new ItemDiamond(2), new ItemWandBase(1) },
                 new ItemDiamondWand(1), 
                 RecipeType.None
             ));
             
             AddRecipe(new CraftRecipe(
-                new List<ItemBase>() { },
+                new List<ItemBase>() { new ItemRuby(2), new ItemWandBase(1) },
                 new ItemRubyWand(1), 
                 RecipeType.None
             ));

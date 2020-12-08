@@ -5,9 +5,12 @@
         Food,
         Drink,
         Burnable,
+        Magic,
         Wooden,
         Silver,
         Gold,
+        Diamond,
+        Ruby,
         Pickaxe,
         Hammer,
         Wand

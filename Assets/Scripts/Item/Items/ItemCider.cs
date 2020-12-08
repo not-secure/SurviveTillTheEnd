@@ -12,7 +12,7 @@ namespace Item.Items {
         public override bool IsConsumed => true;
 
         public override string Description => "You don't need to eat sweet potatoes anymore.\n" +
-                                              "<color=00c0ff>Recovers your stamina a little bit.</color>";
+                                              "<color=#00c0ff>Recovers your stamina a little bit.</color>";
 
         protected override string GetTextureKey() {
             return "Sprites/Items/Food/Wine";
@@ -20,7 +20,7 @@ namespace Item.Items {
 
         public override void OnUseItem(PlayerController player) {
             base.OnUseItem(player);
-            player.Stamina += 10;
+            player.Stamina += 30;
         }
     }
 }

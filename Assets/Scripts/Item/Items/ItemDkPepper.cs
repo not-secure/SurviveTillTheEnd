@@ -12,7 +12,7 @@ namespace Item.Items {
         public override string Name => "Dk. Pepper";
 
         public override string Description => "An intellectual drink for chosen people.\n" +
-                                              "<color=00c0ff>Recovers your health a little bit.</color>";
+                                              "<color=#00c0ff>Recovers your health a little bit.</color>";
 
         protected override string GetTextureKey() {
             return "Sprites/Items/Potion/Red Potion";

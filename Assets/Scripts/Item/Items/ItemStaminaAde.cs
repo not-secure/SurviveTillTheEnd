@@ -12,7 +12,7 @@ namespace Item.Items {
         public override string Name => "StaminaAde";
 
         public override string Description => "It is not a ade which name seems powerful. It is StaminaAde.\n" +
-                                              "<color=00c0ff>Recovers your stamina a little bit.</color>";
+                                              "<color=#00c0ff>Recovers your stamina a little bit.</color>";
 
         protected override string GetTextureKey() {
             return "Sprites/Items/Potion/Blue Potion";
@@ -20,7 +20,7 @@ namespace Item.Items {
         
         public override void OnUseItem(PlayerController player) {
             base.OnUseItem(player);
-            player.Stamina += 20;
+            player.Stamina += 35;
         }
     }
 }

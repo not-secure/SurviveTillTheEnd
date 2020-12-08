@@ -1,4 +1,6 @@
-﻿namespace Item.Items {
+﻿using Player;
+
+namespace Item.Items {
     public class ItemApple: ItemBase {
         public ItemApple(int count) : base(count) {
         }
@@ -11,10 +13,15 @@
 
         public override string Description =>
             "You should be good at English to eat this apple.\n" +
-            "<color=#00c0ff>Heals HP</color>";
+            "<color=#00c0ff>Recovers your health a little bit.</color>";
         
         protected override string GetTextureKey() {
             return "Sprites/Items/Food/Apple";
+        }
+        
+        public override void OnUseItem(PlayerController player) {
+            base.OnUseItem(player);
+            player.Health += 50;
         }
     }
 }

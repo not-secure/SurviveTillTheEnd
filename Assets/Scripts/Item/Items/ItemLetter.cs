@@ -1,4 +1,5 @@
-﻿using Player;
+﻿using Event;
+using Player;
 using UI.Dialog;
 using UI.Note;
 using UnityEngine;
@@ -14,7 +15,7 @@ namespace Item.Items {
         public override string Name => "Today's Letter";
 
         public override string Description => "A letter for you\n" +
-                                              "<color=ffc000>Story Item</color>";
+                                              "<color=#ffc000>Story Item</color>";
 
         public override bool IsConsumed => true;
 
@@ -24,11 +25,14 @@ namespace Item.Items {
 
         public override void OnUseItem(PlayerController player) {
             base.OnUseItem(player);
+            
             var dialogManager = GameObject.FindGameObjectWithTag("DialogManager")
                 .GetComponent<UIDialogManager>();
             
             var dialog = dialogManager.OpenIfNoneOpened(DialogKey.Note, dialogManager.note);
             dialog.GetComponent<UINote>().SetDay(player.GameManager.DayCounter);
+            
+            EventManager.GetInstance().ExecuteEvents(player);
         }
     }
 }

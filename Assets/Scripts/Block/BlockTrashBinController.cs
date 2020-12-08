@@ -18,6 +18,9 @@ namespace Block {
             Table = new DroprateTable();
             Table.AddDrop(new ItemApple(1), 10);
             Table.AddDrop(new ItemPlank(3), 20);
+            Table.AddDrop(new ItemSilverKey(2), 20);
+            Table.AddDrop(new ItemSilverKey(3), 10);
+            Table.AddDrop(new ItemGear(5), 10);
         }
 
         public override string GetInteractDescription(PlayerController player) {

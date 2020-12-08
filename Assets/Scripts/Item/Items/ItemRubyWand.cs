@@ -11,7 +11,7 @@ namespace Item.Items {
 
         public override int ItemId => 5;
         public override int MaxStack => 1;
-        public override ItemType[] Type => new[] { ItemType.Wand };
+        public override ItemType[] Type => new[] { ItemType.Magic, ItemType.Wand, ItemType.Wooden, ItemType.Ruby };
         public override string Name => "Ruby Wand";
         public override int RequiredStamina => 30;
         
