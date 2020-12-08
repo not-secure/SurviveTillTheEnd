@@ -31,14 +31,16 @@ namespace Common {
             Enemies = enemyManagerObject.GetComponent<EnemyManager>();
         }
 
+        public void Start()
+        {
+            StartGame();
+        }
+
         public void Update()
         {
-            if (Input.GetKeyDown(KeyCode.K))
-                StartGame();
-
             time += Time.deltaTime;
 
-            float time24h = time / changePeriod;
+            float time24h = time / changePeriod % 1;
 
             RenderSettings.ambientLight = lightPreset.AmbientColor.Evaluate(time24h);
             RenderSettings.fogColor = lightPreset.FogColor.Evaluate(time24h);
@@ -52,7 +54,7 @@ namespace Common {
 
         public void StartGame()
         {
-            time = 0;
+            time = changePeriod / 4 + 5;
             dayStatus = DayStatus.Day;
 
             if (RenderSettings.sun != null && directionalLight == null)
@@ -62,15 +64,17 @@ namespace Common {
             Debug.Log("Starting game...");
         }
 
-        public void ChangeDayStatus()
+        public void ChangeDayStatus(bool isNight)
         {
-            if (dayStatus == DayStatus.Day) {
+            if (isNight) {
                 dayStatus = DayStatus.Night;
                 return;
             }
             
             dayStatus = DayStatus.Day;
             _dayCounter++;
+
+            Debug.Log("Changing to day..." + _dayCounter);
         }
 
         public int DayCounter => _dayCounter;
@@ -79,8 +83,10 @@ namespace Common {
         {
             while (true)
             {
-                if ((int)time % changePeriod == 0)
-                    ChangeDayStatus();
+                if ((int)time % changePeriod == changePeriod / 4 * 1)
+                    ChangeDayStatus(false);
+                else if ((int)time % changePeriod == changePeriod / 4 * 3)
+                    ChangeDayStatus(true);
 
                 yield return new WaitForSeconds(1f);
             }
