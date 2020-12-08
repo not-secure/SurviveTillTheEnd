@@ -13,7 +13,8 @@ namespace Item.Items {
         public override int MaxStack => 1;
         public override ItemType[] Type => new[] { ItemType.Wand };
         public override string Name => "Ruby Wand";
-
+        public override int RequiredStamina => 30;
+        
         public override string Description => "*blazingly* beautiful magical wand.\n" +
                                               "<color=#00c0ff>Fires a *blazingly* beautiful projectile.</color>";
         

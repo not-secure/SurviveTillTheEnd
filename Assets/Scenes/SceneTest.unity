@@ -226,6 +226,25 @@ MonoBehaviour:
   cameraObject: {fileID: 328426030}
   targetObject: {fileID: 1706997569}
   offset: {x: 0, y: 10, z: -10}
+--- !u!1 &395289645 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3908705849800737448, guid: e24c0f731859a0e4da6b1bdc348280af, type: 3}
+  m_PrefabInstance: {fileID: 1706997568}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &395289649
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395289645}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2432090755550338912, guid: 1d6dd184c25df3046b014a34f0fc0e26, type: 3}
 --- !u!1 &469351089
 GameObject:
   m_ObjectHideFlags: 0
@@ -734,7 +753,7 @@ GameObject:
   - component: {fileID: 1617468908}
   m_Layer: 5
   m_Name: DialogManager
-  m_TagString: Untagged
+  m_TagString: DialogManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -836,11 +855,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4681658998809583819, guid: e24c0f731859a0e4da6b1bdc348280af, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4681658998809583819, guid: e24c0f731859a0e4da6b1bdc348280af, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.95
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4681658998809583819, guid: e24c0f731859a0e4da6b1bdc348280af, type: 3}
       propertyPath: m_LocalPosition.z
@@ -921,11 +940,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 8
   rotateSpeed: 2.5
+  staminaRegeneration: 1
   gameManager: {fileID: 1141767663}
   World: {fileID: 0}
   Entities: {fileID: 0}
   keyMap: 320100003001000071000000650000007200000066000000
-  Stamina: 100
 --- !u!1001 &1784305302
 PrefabInstance:
   m_ObjectHideFlags: 0

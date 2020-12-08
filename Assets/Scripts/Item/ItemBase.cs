@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Common;
 using Player;
+using UI.Status;
 using UnityEngine;
 
 namespace Item {
@@ -20,6 +21,8 @@ namespace Item {
 
         public float LastUse = 0f;
         public virtual float Cooltime => 3.0f;
+        public virtual int RequiredStamina => 0;
+        public virtual bool IsConsumed => false;
 
         public Sprite GetImage() {
             return CachedResources.Load<Sprite>(GetTextureKey());
@@ -34,6 +37,18 @@ namespace Item {
                 return false;
 
             LastUse = Time.time;
+            
+            if (player.Stamina < RequiredStamina) {
+                UIStatusManager.GetInstance()?.AddText("You need to take a rest!", 1.0f);
+                
+                return false;
+            }
+
+            player.Stamina -= RequiredStamina;
+            if (IsConsumed) {
+                player.Inventory.RemoveItem(this);
+            }
+            
             OnUseItem(player);
             return true;
         }

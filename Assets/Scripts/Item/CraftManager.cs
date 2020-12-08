@@ -12,8 +12,8 @@ namespace Item {
             _player = player;
             
             AddRecipe(new CraftRecipe(
-                new List<ItemBase>() { new ItemPlank(10) },
-                new ItemPlank(22), 
+                new List<ItemBase>() { new ItemPlank(10), new ItemSilver(3) },
+                new ItemWandBase(1), 
                 RecipeType.None
             ));
             

@@ -10,6 +10,7 @@ TagManager:
   - WorldManager
   - EntityManager
   - ItemDescriptionManager
+  - DialogManager
   layers:
   - Default
   - TransparentFX

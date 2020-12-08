@@ -23,7 +23,7 @@ namespace UI.Dialog {
     
     public class UIDialogManager: MonoBehaviour {
         public GameObject inventory;
-        public GameObject dialog;
+        public GameObject note;
         private static UIItemDescriptionManager _itemDescription;
         private static readonly Stack<DialogItem> CurrentDialog = new Stack<DialogItem>();
 
@@ -40,12 +40,15 @@ namespace UI.Dialog {
                 OpenIfNoneOpened(DialogKey.Inventory, inventory);
         }
 
-        public void OpenIfNoneOpened(DialogKey key, GameObject obj) {
-            if (CurrentDialog.Any(o => o.Key == DialogKey.Inventory))
-                return;
+        public GameObject OpenIfNoneOpened(DialogKey key, GameObject obj) {
+            var dialog = CurrentDialog.FirstOrDefault(o => o.Key == key);
+            if (!dialog.Equals(default(DialogItem)))
+                return dialog.Dialog;
             
             var item = new DialogItem(key, Instantiate(obj, transform));
             CurrentDialog.Push(item);
+
+            return item.Dialog;
         }
 
         public static void Close() {

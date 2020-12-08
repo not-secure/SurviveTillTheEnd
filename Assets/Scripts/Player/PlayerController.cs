@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Block;
 using Common;
 using Entity;
@@ -13,6 +14,8 @@ namespace Player {
     {
         public float moveSpeed;
         public float rotateSpeed;
+
+        public int staminaRegeneration = 1;
 
         public GameObject gameManager;
 
@@ -29,8 +32,7 @@ namespace Player {
             KeyCode.R,
             KeyCode.F
         };
-        
-        private GameManager _manager;
+
         private UIStatusManager _statusManager;
         private BlockController _interactingBlock;
         private int _interactingId;
@@ -39,8 +41,8 @@ namespace Player {
         public void Start() {
             Craft = new CraftManager(this);
 
-            _manager = gameManager.GetComponent<GameManager>();
-            World = _manager.World;
+            GameManager = gameManager.GetComponent<GameManager>();
+            World = GameManager.World;
 
             _statusManager = GameObject.FindGameObjectWithTag("StatusManager")
                 .GetComponent<UIStatusManager>();
@@ -61,6 +63,16 @@ namespace Player {
             );
             gameObject.transform.Rotate(new Vector3(0, 0, horizontal));
 
+            if (Stamina < MaxStamina && Time.time - _lastStaminaUse > TimeToStaminaFill) {
+                if (Time.time - _lastStaminaHeal > 0.1f) {
+                    Stamina = Math.Min(
+                        MaxStamina,
+                        Stamina + staminaRegeneration
+                    );
+                    _lastStaminaHeal = Time.time;
+                }
+            }
+            
             for (var i = 0; i < 6; i++) {
                 var key = keyMap[i];
                 if (!Input.GetKey(key)) continue;
@@ -85,6 +97,7 @@ namespace Player {
                 if (!interactableBlock) return;
                 
                 _interactingBlock = interactableBlock;
+                _interactingBlock.OnStartInteract(this);
                 _interactingId = _statusManager.AddProgress(
                     _interactingBlock.GetInteractProgress(this), 
                     _interactingBlock.GetInteractDuration(this), 
@@ -157,6 +170,20 @@ namespace Player {
             }
         }
 
-        public int Stamina = 100;
+        private const float TimeToStaminaFill = 10f;
+        private float _lastStaminaUse = 0f;
+        private float _lastStaminaHeal = 0f;
+        private int _stamina = 100;
+        public int Stamina {
+            get => _stamina;
+            set {
+                if (_stamina > value)
+                    _lastStaminaUse = Time.time;
+
+                _stamina = value;
+            }
+        }
+
+        public GameManager GameManager { get; private set; }
     }
 }

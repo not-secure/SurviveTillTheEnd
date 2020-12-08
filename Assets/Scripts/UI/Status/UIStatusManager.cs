@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UI.Common;
 using UnityEngine;
 
@@ -28,7 +29,16 @@ namespace UI.Status {
         public GameObject text;
         
         private readonly Dictionary<int, StatusItem> _items = new Dictionary<int, StatusItem>();
-        
+
+        private static UIStatusManager _instance;
+        public void Start() {
+            _instance = this;
+        }
+
+        public static UIStatusManager GetInstance() {
+            return _instance;
+        }
+
         public int AddItem(GameObject obj, string str, float duration, OnFinish callback) {
             var itemObject = Instantiate(obj, transform);
             var item = new StatusItem(itemObject, duration, callback);
@@ -64,7 +74,7 @@ namespace UI.Status {
         }
 
         private void Update() {
-            var removedItems = new List<int>();
+            var removedItems = new List<KeyValuePair<int, StatusItem>>();
             
             foreach (var pair in _items) {
                 var item = pair.Value;
@@ -73,13 +83,13 @@ namespace UI.Status {
                 item.StatusElement.SetProgress(Mathf.Min(1,percentage));
 
                 if (percentage >= 1) {
-                    removedItems.Add(pair.Key);
-                    item.Callback?.Invoke();
+                    removedItems.Add(pair);
                 }
             }
 
-            foreach (var key in removedItems) {
-                CancelItem(key);
+            foreach (var pair in removedItems) {
+                pair.Value.Callback?.Invoke();
+                CancelItem(pair.Key);
             }
         }
     }

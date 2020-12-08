@@ -21,6 +21,8 @@ namespace Common {
         public Light directionalLight;
         public LightingPreset lightPreset;
 
+        private int _dayCounter = 0;
+
         public void OnEnable() {
             Player = playerObject.GetComponent<PlayerController>();
             World = worldManagerObject.GetComponent<WorldManager>();
@@ -59,11 +61,16 @@ namespace Common {
 
         public void ChangeDayStatus()
         {
-            if (dayStatus == DayStatus.Day)
+            if (dayStatus == DayStatus.Day) {
                 dayStatus = DayStatus.Night;
-            else
-                dayStatus = DayStatus.Day;
+                return;
+            }
+            
+            dayStatus = DayStatus.Day;
+            _dayCounter++;
         }
+
+        public int DayCounter => _dayCounter;
 
         public IEnumerator UpdateGame()
         {

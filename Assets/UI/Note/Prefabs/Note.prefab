@@ -313,13 +313,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Hello, World!
-
-
-    I am you
-
-
-    asdfasdf'
+  m_text: Hello, World!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: af92321386030364eba5ab24c587592c, type: 2}
   m_sharedMaterial: {fileID: -7308266936460576948, guid: af92321386030364eba5ab24c587592c, type: 2}

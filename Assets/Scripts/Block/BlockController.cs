@@ -3,9 +3,15 @@ using UnityEngine;
 
 namespace Block {
     public abstract class BlockController: MonoBehaviour {
-        private const float InteractDistance = 10f;
+        private const float InteractDistance = 5f;
+        private float _lastInteraction;
+
+        public virtual float Cooltime => 5f;
+        public virtual int RequiredStamina => 20;
         
         public virtual bool CanInteract(PlayerController player) {
+            if (Time.time - _lastInteraction < Cooltime) return false;
+            if (player.Stamina < RequiredStamina) return false;
             var distance = (transform.position - player.transform.position).magnitude;
             return distance < InteractDistance;
         }
@@ -21,7 +27,13 @@ namespace Block {
         public virtual string GetInteractProgress(PlayerController player) {
             return "Interacting";
         }
+
+        public virtual void OnStartInteract(PlayerController player) {
+            player.Stamina -= RequiredStamina;
+        }
         
-        public abstract void OnInteract(PlayerController player);
+        public virtual void OnInteract(PlayerController player) {
+            _lastInteraction = Time.time;
+        }
     }
 }
