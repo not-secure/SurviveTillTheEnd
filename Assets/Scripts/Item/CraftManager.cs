@@ -42,14 +42,32 @@ namespace Item {
             ));
             
             AddRecipe(new CraftRecipe(
-                new List<ItemBase>() { new ItemRuby(2), new ItemWandBase(1) },
+                new List<ItemBase>() { new ItemRuby(3), new ItemWandBase(1) },
                 new ItemRubyWand(1), 
                 RecipeType.None
             ));
             
             AddRecipe(new CraftRecipe(
-                new List<ItemBase>() {  },
+                new List<ItemBase>() {  new ItemEmerald(4), new ItemWandBase(1) },
                 new ItemEmeraldWand(1), 
+                RecipeType.None
+            ));
+            
+            AddRecipe(new CraftRecipe(
+                new List<ItemBase>() { },
+                new ItemSilverSword3(1),
+                RecipeType.None
+            ));
+            
+            AddRecipe(new CraftRecipe(
+                new List<ItemBase>() {   },
+                new ItemDiamondWand(1), 
+                RecipeType.None
+            ));
+            
+            AddRecipe(new CraftRecipe(
+                new List<ItemBase>() {   },
+                new ItemRubyWand(1), 
                 RecipeType.None
             ));
         }

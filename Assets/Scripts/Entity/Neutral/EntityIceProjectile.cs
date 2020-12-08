@@ -16,13 +16,22 @@ namespace Entity.Neutral {
             _born = Time.time;
         }
 
+        private float _lastAttack = 0;
         public override void OnTick() {
             base.OnTick();
+            if (Time.time - _lastAttack > 0.5f) {
+                GameManager.Enemies.AttackInRange(Entity.transform, 5, 100);
+            } else {
+                
+            }
+
             if (Time.time - _born > Lifetime)
                 Kill();
         }
 
         public override void OnCollisionEnter(GameObject other) {
+            base.OnCollisionEnter(other);
+
             Kill();
         }
     }

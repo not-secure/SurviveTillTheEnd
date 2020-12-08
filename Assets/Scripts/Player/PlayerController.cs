@@ -7,6 +7,7 @@ using Entity.Neutral;
 using Item;
 using UI.Status;
 using UnityEngine;
+using UnityEngine.VFX;
 using World;
 
 namespace Player {
@@ -18,6 +19,8 @@ namespace Player {
         public int staminaRegeneration = 1;
 
         public GameObject gameManager;
+        public VisualEffect vfxSlash;
+        public VisualEffect vfxDash;
 
         [NonSerialized] public CraftManager Craft;
         [NonSerialized] public WorldManager World;
@@ -38,6 +41,7 @@ namespace Player {
         
         private Animator _animator;
         private int _animMove;
+        private int _animAttack;
         
         [NonSerialized]
         public CharacterController Controller;
@@ -58,6 +62,7 @@ namespace Player {
             Controller = GetComponent<CharacterController>();
             _animator = GetComponent<Animator>();
             _animMove = Animator.StringToHash("Move");
+            _animAttack = Animator.StringToHash("IsAttack");
         }
 
         public void Update() {
@@ -143,6 +148,17 @@ namespace Player {
             if (leftItem != null) {
                 EntityItem.DropItem(Entities, position, leftItem);
             }
+        }
+
+        public void StartAttack(int isImproved) {
+            _animator.SetBool(_animAttack, true);
+            vfxSlash.SetInt("SwordLevel", isImproved);
+            vfxSlash.Play();
+        }
+
+        public void EndAttack() {
+            _animator.SetBool(_animAttack, false);
+            vfxSlash.Stop();
         }
         
         public void SetDead() {

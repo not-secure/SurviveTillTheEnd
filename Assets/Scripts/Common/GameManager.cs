@@ -11,9 +11,11 @@ namespace Common {
 
         public GameObject playerObject;
         public GameObject worldManagerObject;
+        public GameObject enemyManagerObject;
 
         [NonSerialized] public PlayerController Player;
         [NonSerialized] public WorldManager World;
+        [NonSerialized] public EnemyManager Enemies;
 
         public float time;
         public int changePeriod = 100;
@@ -26,6 +28,7 @@ namespace Common {
         public void OnEnable() {
             Player = playerObject.GetComponent<PlayerController>();
             World = worldManagerObject.GetComponent<WorldManager>();
+            Enemies = enemyManagerObject.GetComponent<EnemyManager>();
         }
 
         public void Update()

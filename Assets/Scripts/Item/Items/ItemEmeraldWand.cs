@@ -26,7 +26,7 @@ namespace Item.Items {
         public override void OnUseItem(PlayerController player) {
             base.OnUseItem(player);
 
-            var vfx = player.GetComponentInChildren<VisualEffect>();
+            var vfx = player.vfxDash;
             SingletonMonoBehaviour.GetInstance()
                 .StartCoroutine(UseCoroutine(player, vfx));
         }

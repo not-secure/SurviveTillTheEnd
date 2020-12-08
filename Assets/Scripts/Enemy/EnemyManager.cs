@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Enemy;
 using UnityEngine;
 
 [System.Serializable]
@@ -30,6 +33,8 @@ public class EnemyManager : MonoBehaviour
     public GameObject normalEnemy;
     public GameObject highspeedEnemy;
     public GameObject highdamageEnemy;
+
+    private List<EnemyBase> _enemies = new List<EnemyBase>();
 
     public void LoadData()
     {
@@ -68,11 +73,11 @@ public class EnemyManager : MonoBehaviour
         Debug.Log("Spawning wave..." + (intDay + 1) + " / " + (intNum + 1) + " / " + JsonUtility.ToJson(current));
 
         for (int i = 0; i < current.normal; i++)
-            Instantiate(normalEnemy);
+            SpawnEnemy(normalEnemy);
         for (int i = 0; i < current.highspeed; i++)
-            Instantiate(highspeedEnemy);
+            SpawnEnemy(highspeedEnemy);
         for (int i = 0; i < current.highdamage; i++)
-            Instantiate(highdamageEnemy);
+            SpawnEnemy(highdamageEnemy);
 
         if (intNum == waveData.data[intDay].data.Length - 1)
         {
@@ -81,6 +86,43 @@ public class EnemyManager : MonoBehaviour
         }
         else
             this.num += 1;
+    }
+
+    public void SpawnEnemy(GameObject enemy) {
+        var enemySpawned = Instantiate(enemy);
+        var enemyController = enemySpawned.GetComponent<EnemyBase>();
+        
+        _enemies.Add(enemyController);
+    }
+
+    public void KillEnemy(EnemyBase enemy) {
+        _enemies.Remove(enemy);
+        Destroy(enemy.gameObject);
+    }
+
+    public void AttackInRange(Transform damageSource, float yawRange, float radius, float damage) {
+        var attackedEnemies = _enemies
+            .Where(enemyBase => {
+                var displacement = (enemyBase.transform.position - damageSource.position);
+                if (displacement.magnitude > radius)
+                    return false;
+
+                var rotY = damageSource.rotation.eulerAngles.y * Mathf.Deg2Rad;
+                var direction = new Vector3(Mathf.Sin(rotY), 0, Mathf.Cos(rotY));
+                var displacementRot = 
+                    Mathf.Acos(Vector3.Dot(direction, displacement.normalized))
+                    * Mathf.Rad2Deg;
+                
+                return Mathf.Abs(displacementRot) < yawRange / 2;
+            });
+
+        foreach (var attackedEnemy in attackedEnemies) {
+            attackedEnemy.Hurt(damage, damageSource.position);
+        }
+    }
+
+    public void AttackInRange(Transform damageSource, float radius, float damage) {
+        AttackInRange(damageSource, 360, radius, damage);
     }
 
     public void Update()

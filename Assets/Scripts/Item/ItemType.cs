@@ -14,6 +14,7 @@
         Emerald,
         Pickaxe,
         Hammer,
-        Wand
+        Wand,
+        Sword
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Common;
 using UnityEngine;
 using World;
 using Object = UnityEngine.Object;
@@ -10,6 +11,7 @@ namespace Entity {
         
         public int ID = -1;
         public GameObject Entity;
+        public GameManager GameManager;
         public EntityManager EntityManager;
         public WorldManager World;
         public Vector3 Motion = Vector3.zero;

@@ -1,13 +1,18 @@
 ﻿using System.Collections.Generic;
+using Common;
 using UnityEngine;
 using World;
 
 namespace Entity {
     public class EntityManager: MonoBehaviour {
         private WorldManager _world;
+        private GameManager _game;
         private readonly Dictionary<int, EntityBase> _entities = new Dictionary<int, EntityBase>();
 
         public void OnEnable() {
+            _game = GameObject.FindGameObjectWithTag("GameManager")
+                .GetComponent<GameManager>();
+            
             _world = GameObject.FindGameObjectWithTag("WorldManager")
                 .GetComponent<WorldManager>();
         }
@@ -30,6 +35,7 @@ namespace Entity {
             var entity = new TEntity {
                 ID = id,
                 World = _world,
+                GameManager = _game,
                 EntityManager = this
             };
             entity.Spawn(transform);
