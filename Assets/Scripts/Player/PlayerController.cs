@@ -19,10 +19,10 @@ namespace Player {
 
         public GameObject gameManager;
 
-        public CraftManager Craft;
-        public WorldManager World;
-        public EntityManager Entities;
-        public readonly Inventory Inventory = new Inventory(30);
+        [NonSerialized] public CraftManager Craft;
+        [NonSerialized] public WorldManager World;
+        [NonSerialized] public EntityManager Entities;
+        [NonSerialized] public readonly Inventory Inventory = new Inventory(30);
 
         public KeyCode[] keyMap = new[] {
             KeyCode.LeftControl,
@@ -35,8 +35,12 @@ namespace Player {
 
         private UIStatusManager _statusManager;
         private int _interactingId;
-        private CharacterController _controller;
         
+        private Animator _animator;
+        private int _animMove;
+        
+        [NonSerialized]
+        public CharacterController Controller;
         public BlockController InteractingBlock { get; private set; }
 
         public void Start() {
@@ -51,18 +55,22 @@ namespace Player {
             Entities = GameObject.FindGameObjectWithTag("EntityManager")
                 .GetComponent<EntityManager>();
 
-            _controller = GetComponent<CharacterController>();
+            Controller = GetComponent<CharacterController>();
+            _animator = GetComponent<Animator>();
+            _animMove = Animator.StringToHash("Move");
         }
 
         public void Update() {
             var horizontal = Input.GetAxis("Horizontal") * rotateSpeed;
-            var vertical = Input.GetAxis("Vertical") * moveSpeed * -1;
+            var vertical = Input.GetAxis("Vertical") * moveSpeed;
 
-            _controller.Move(
+            _animator.SetInteger(_animMove, vertical == 0 ? 0 : 1);
+
+            Controller.Move(
                 gameObject.transform.rotation *
-                new Vector3(0, vertical * Time.deltaTime, -9.8f * Time.deltaTime)
+                new Vector3(0, -9.8f * Time.deltaTime, vertical * Time.deltaTime)
             );
-            gameObject.transform.Rotate(new Vector3(0, 0, horizontal));
+            gameObject.transform.Rotate(new Vector3(0, horizontal, 0));
 
             if (Stamina < MaxStamina && Time.time - _lastStaminaUse > TimeToStaminaFill) {
                 if (Time.time - _lastStaminaHeal > 0.1f) {

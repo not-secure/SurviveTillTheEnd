@@ -11,6 +11,7 @@
         Gold,
         Diamond,
         Ruby,
+        Emerald,
         Pickaxe,
         Hammer,
         Wand
