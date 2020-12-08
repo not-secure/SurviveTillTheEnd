@@ -8,6 +8,7 @@ using System.Collections;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Common;
 
 namespace World
 {
@@ -122,6 +123,12 @@ namespace World
         public void GameOver()
         {
             if (isGameOver) return;
+
+            GameManager manager = FindObjectOfType<GameManager>();
+            int day = (int)(manager.time / manager.changePeriod);
+            int hrs = (int)(manager.time % manager.changePeriod / manager.changePeriod * 24);
+
+            gameOverTMP2.text = "You survived for " + day + " day" + (day > 1 ? "s " : " ") + hrs + (hrs > 1 ? " hours" : " hour") + ".\n\n" + gameOverTMP2.text;
 
             Debug.Log("GameOver");
             StartCoroutine(GameOverOverlay());
