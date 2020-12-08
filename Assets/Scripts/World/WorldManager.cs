@@ -93,7 +93,7 @@ namespace World
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                else
+                else if (Input.GetKeyDown(KeyCode.Escape))
                     Application.Quit();
 
                 return;
@@ -130,7 +130,7 @@ namespace World
 
         private IEnumerator GameOverOverlay()
         {
-            Time.timeScale = 0.05f;
+            Time.timeScale = 0f;
 
             while (gameOverImage.color.a < 1f)
             {
@@ -139,6 +139,7 @@ namespace World
             }
 
             Time.timeScale = 1f;
+
             yield return new WaitForSecondsRealtime(0.5f);
 
             while (gameOverTMP1.color.a < 1f)
