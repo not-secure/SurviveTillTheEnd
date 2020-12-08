@@ -790,7 +790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 7895213300251719331, guid: 0d3f801b43a3f3246a54e084e113cabb, type: 3}
-  dialog: {fileID: 0}
+  note: {fileID: 4104149542539741318, guid: ddb21bf139f83e94e9a221f152da4915, type: 3}
 --- !u!1 &1700585871
 GameObject:
   m_ObjectHideFlags: 0
@@ -1175,6 +1175,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6652149008956429260, guid: 025d84e34530e9748a66d7bba01ae156, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7807448008348360147, guid: 025d84e34530e9748a66d7bba01ae156, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7807448008348360147, guid: 025d84e34530e9748a66d7bba01ae156, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7807448008348360147, guid: 025d84e34530e9748a66d7bba01ae156, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7807448008348360147, guid: 025d84e34530e9748a66d7bba01ae156, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

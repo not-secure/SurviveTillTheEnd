@@ -6,27 +6,36 @@ namespace Entity.Neutral {
     public class EntityItemController : MonoBehaviour {
         public GameObject contentObject;
         public GameObject caseObject;
-        public float friction = 0.01f;
-        public float gravity = 9f;
+        
+        [NonSerialized] public bool UpdateMotion = false;
         
         private Vector3 _motion = Vector3.zero;
         private float _minY;
-        private bool _updateMotion = false;
+        private Rigidbody _rigidbody;
+        private Collider _collider;
 
+        private void OnEnable() {
+            _rigidbody = GetComponent<Rigidbody>();
+            _collider = GetComponent<Collider>();
+        }
+
+        private float _staleTime = 0;
+        
         private void Update() {
             var position = transform.position;
-            if (_updateMotion) {
-                position += _motion * (5 * Time.deltaTime);
-                _motion *= 1 - friction;
             
-                if (_motion.y > -10)
-                    _motion.y -= gravity * Time.deltaTime;
+            if (UpdateMotion) {
+                if (!Physics.Raycast(transform.position, -Vector3.up, 1f)) return;
+
+                _staleTime += Time.deltaTime;
+                if (_staleTime <= 1f) return;
+                
+                UpdateMotion = false;
+                _rigidbody.isKinematic = true;
+                _collider.isTrigger = true;
+                _minY = transform.position.y;
             }
-            
-            if (_updateMotion && position.y <= _minY) {
-                _updateMotion = false;
-            }
-            
+
             position.y += Mathf.Sin(Time.time) * (Time.deltaTime / 3);
             position.y = Mathf.Max(_minY, position.y);
             transform.position = position;
@@ -38,13 +47,13 @@ namespace Entity.Neutral {
         }
 
         public void AddRandomMotion() {
-            _minY = transform.position.y;
             _motion = new Vector3(
                 Random.value * 5f - 2.5f,
                 Random.value * 2.5f + 5f,
                 Random.value * 5f - 2.5f
             );
-            _updateMotion = true;
+            _rigidbody.AddForce(_motion, ForceMode.Impulse);
+            UpdateMotion = true;
         }
 
         public void SetTexture(Texture tex) {

@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7223434192860805054}
   - component: {fileID: 6203377068734113134}
   - component: {fileID: 2080830458369800097}
+  - component: {fileID: 5068153782298838420}
+  - component: {fileID: 697882049964387591}
   m_Layer: 5
   m_Name: InteractStatus
   m_TagString: Untagged
@@ -93,6 +95,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 964680356014635473}
+--- !u!222 &5068153782298838420
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3126624207924205952}
+  m_CullTransparentMesh: 0
+--- !u!225 &697882049964387591
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3126624207924205952}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &3442683276519510386
 GameObject:
   m_ObjectHideFlags: 0

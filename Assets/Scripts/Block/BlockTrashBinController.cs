@@ -39,7 +39,7 @@ namespace Block {
             base.OnInteract(player);
             EntityItem.DropItem(
                 player.Entities,
-                transform.position + new Vector3(0, 2f, 0),
+                transform.position + new Vector3(0, 4f, 0),
                 Table.GetDrop()
             );
         }

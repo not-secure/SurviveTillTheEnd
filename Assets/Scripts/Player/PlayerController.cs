@@ -34,9 +34,10 @@ namespace Player {
         };
 
         private UIStatusManager _statusManager;
-        private BlockController _interactingBlock;
         private int _interactingId;
         private CharacterController _controller;
+        
+        public BlockController InteractingBlock { get; private set; }
 
         public void Start() {
             Craft = new CraftManager(this);
@@ -81,13 +82,13 @@ namespace Player {
                 item?.UseItem(this);
             }
 
-            if (_interactingBlock) {
+            if (InteractingBlock) {
                 // Cancel if key is no longer pressed, or player is too far
-                if (Input.GetKey(KeyCode.Space) && _interactingBlock.CanInteract(this))
+                if (Input.GetKey(KeyCode.Space) && InteractingBlock.CanInteract(this))
                     return;
                 
                 _statusManager.CancelItem(_interactingId);
-                _interactingBlock = null;
+                InteractingBlock = null;
                 _interactingId = -1;
             } else {
                 if (!Input.GetKey(KeyCode.Space)) return;
@@ -96,11 +97,11 @@ namespace Player {
                 var interactableBlock = GetInteractableBlock();
                 if (!interactableBlock) return;
                 
-                _interactingBlock = interactableBlock;
-                _interactingBlock.OnStartInteract(this);
+                InteractingBlock = interactableBlock;
+                InteractingBlock.OnStartInteract(this);
                 _interactingId = _statusManager.AddProgress(
-                    _interactingBlock.GetInteractProgress(this), 
-                    _interactingBlock.GetInteractDuration(this), 
+                    InteractingBlock.GetInteractProgress(this), 
+                    InteractingBlock.GetInteractDuration(this), 
                     OnInteractFinish
                 );
             }
@@ -121,8 +122,8 @@ namespace Player {
 
         private void OnInteractFinish() {
             _interactingId = -1;
-            var finishedBlock = _interactingBlock;
-            _interactingBlock = null;
+            var finishedBlock = InteractingBlock;
+            InteractingBlock = null;
             
             finishedBlock.OnInteract(this);
         }

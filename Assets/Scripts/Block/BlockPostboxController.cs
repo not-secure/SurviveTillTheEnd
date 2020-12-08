@@ -10,8 +10,8 @@ namespace Block {
             
             EntityItem.DropItem(
                 player.Entities,
-                transform.position + new Vector3(0, 2f, 0),
-                new ItemPlank(10)
+                transform.position + new Vector3(0, 4f, 0),
+                new ItemLetter(1)
             );
         }
 

@@ -22,7 +22,7 @@ namespace World
         public float maxDistanceFromPlayer;
         public static Vector2Int ChunkSize = new Vector2Int(30, 30);
 
-        private PlayerController _player;
+        public PlayerController Player { get; private set; }
         private Dictionary<Vector2Int, Chunk> _chunkMap;
         private readonly Vector2Int[] _directions = new Vector2Int[4] {
             new Vector2Int(0, 1),
@@ -65,7 +65,7 @@ namespace World
 
         public void Start() {
             _chunkMap = new Dictionary<Vector2Int, Chunk>(); 
-            _player = GameObject.FindGameObjectWithTag("Player")
+            Player = GameObject.FindGameObjectWithTag("Player")
                 .GetComponent<PlayerController>();
             
             GenerateNeighborChunks(PlayerChunk);
@@ -82,7 +82,7 @@ namespace World
         
         public Vector2Int PlayerPosition {
             get {
-                var p = _player.transform.position;
+                var p = Player.transform.position;
                 return new Vector2Int(
                     Mathf.FloorToInt(p.x / ChunkSize.x), 
                     Mathf.FloorToInt(p.z / ChunkSize.y)

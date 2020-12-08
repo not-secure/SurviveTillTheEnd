@@ -17,6 +17,29 @@ namespace Entity.Neutral {
             _controller = Entity.GetComponent<EntityItemController>();
         }
 
+        public override void OnTick() {
+            base.OnTick();
+
+            if (!_controller) return;
+            if (_controller.UpdateMotion) return;
+            
+            var pos = _controller.transform.position;
+            var playerPos = World.Player.transform.position;
+            
+            var distance = (playerPos - pos).magnitude;
+            if (distance > 10f) return;
+            _controller.transform.position =
+                Vector3.MoveTowards(pos, playerPos, 2 * Time.deltaTime);
+
+            if (distance > 2f) return;
+            var leftItem = World.Player.Inventory.AddItem(_item);
+            
+            if (leftItem == null)
+                Kill();
+            else
+                _item = leftItem;
+        }
+
         public void SetItem(ItemBase item) {
             if (!_controller)
                 return;
