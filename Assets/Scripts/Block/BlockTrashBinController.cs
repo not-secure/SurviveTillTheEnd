@@ -16,9 +16,9 @@ namespace Block {
             if (Table != null) return;
             
             Table = new DroprateTable();
-            Table.AddDrop(new ItemApple(1), 10);
-            Table.AddDrop(new ItemPlank(3), 20);
-            Table.AddDrop(new ItemSilverKey(2), 20);
+            Table.AddDrop(new ItemApple(1), 5);
+            Table.AddDrop(new ItemPlank(4), 15);
+            Table.AddDrop(new ItemSilverKey(2), 10);
             Table.AddDrop(new ItemSilverKey(3), 10);
             Table.AddDrop(new ItemGear(5), 10);
         }
@@ -31,7 +31,7 @@ namespace Block {
             if (player.Inventory.GetCount(ItemType.Hammer) > 0)
                 return Random.Range(2, 3);
 
-            return Random.Range(5, 6);
+            return Random.Range(4, 5);
         }
 
         public override string GetInteractProgress(PlayerController player) {

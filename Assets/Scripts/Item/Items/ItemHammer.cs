@@ -9,7 +9,7 @@
         public override string Name => "Hammer";
 
         public override string Description => "You feel like you became the Thor.\n" +
-                                              "<color=#00c0ff>Time to find item in trash bin decreases.</color>";
+                                              "<color=#00c0ff>The time it takes to find item in the trash bin decreases.</color>";
         protected override string GetTextureKey() {
             return "Sprites/Items/Weapon & Tool/Hammer";
         }

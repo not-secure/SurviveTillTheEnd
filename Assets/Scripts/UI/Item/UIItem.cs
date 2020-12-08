@@ -101,7 +101,7 @@ namespace UI.Item {
         }
 
         public void OnPointerEnter(PointerEventData eventData) {
-            _description.ShowItem(Item, eventData.position);
+            _description.ShowItem(Item, eventData.position + Vector2.one * 15);
         }
 
         public void OnPointerExit(PointerEventData eventData) {

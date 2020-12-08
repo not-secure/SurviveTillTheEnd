@@ -11,9 +11,11 @@ namespace Entity.Neutral {
             return prefab;
         }
 
+        private float _bornTime = -1f;
         public override void OnInit() {
             base.OnInit();
-            
+
+            _bornTime = Time.time;
             _controller = Entity.GetComponent<EntityItemController>();
         }
 
@@ -21,7 +23,10 @@ namespace Entity.Neutral {
             base.OnTick();
 
             if (!_controller) return;
-            if (_controller.UpdateMotion) return;
+            if (
+                _controller.UpdateMotion &&
+                (_bornTime > 0f && (Time.time - _bornTime) < 1f)
+            ) return;
             
             var pos = _controller.transform.position;
             var playerPos = World.Player.transform.position;

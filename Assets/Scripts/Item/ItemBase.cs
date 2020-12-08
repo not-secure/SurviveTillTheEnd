@@ -46,7 +46,10 @@ namespace Item {
 
             player.Stamina -= RequiredStamina;
             if (IsConsumed) {
-                player.Inventory.RemoveItem(this);
+                var removed = (ItemBase) Clone();
+                removed.Count = 1;
+                
+                player.Inventory.RemoveItem(removed);
             }
             
             OnUseItem(player);

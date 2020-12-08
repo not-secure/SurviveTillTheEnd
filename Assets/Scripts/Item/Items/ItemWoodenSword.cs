@@ -14,7 +14,7 @@ namespace Item.Items {
         public override string Name => "Wooden Sword";
         public override int RequiredStamina => 8;
         public override float Cooltime => 1.8f;
-        public override string Description => "Your best wooden friend.\n" +
+        public override string Description => "A good communication tool.\n" +
                                               "<color=#00c0ff>You may attack those enemy with this</color>";
         
         protected override string GetTextureKey() {

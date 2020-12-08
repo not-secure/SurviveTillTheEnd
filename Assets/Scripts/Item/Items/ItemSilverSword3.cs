@@ -16,7 +16,7 @@ namespace Item.Items {
         public override int RequiredStamina => 7;
         public override float Cooltime => 1f;
 
-        public override string Description => "Your best friend. (Level 2)\n" +
+        public override string Description => "Your best negotiator friend. (Level 2)\n" +
                                               "<color=#00c0ff>You may attack those enemy with this</color>";
         
         protected override string GetTextureKey() {

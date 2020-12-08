@@ -28,7 +28,7 @@ namespace Block {
         }
 
         public override string GetInteractProgress(PlayerController player) {
-            return "Taking a drink from vending machine";
+            return "Taking a drink from the vending machine";
         }
 
         public override float GetInteractDuration(PlayerController player) {

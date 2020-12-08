@@ -30,6 +30,36 @@ namespace Item {
             ));
             
             AddRecipe(new CraftRecipe(
+                new List<ItemBase>() { new ItemPlank(5), new ItemSilver(3) },
+                new ItemHammer(1), 
+                RecipeType.None
+            ));
+            
+            AddRecipe(new CraftRecipe(
+                new List<ItemBase>() { new ItemPlank(7) },
+                new ItemWoodenSword(1), 
+                RecipeType.None
+            ));
+            
+            AddRecipe(new CraftRecipe(
+                new List<ItemBase>() { new ItemPlank(5), new ItemSilver(5) },
+                new ItemSilverSword1(1),  
+                RecipeType.None
+            ));
+            
+            AddRecipe(new CraftRecipe(
+                new List<ItemBase>() { new ItemSilverSword1(1), new ItemSilver(5) },
+                new ItemSilverSword2(1),  
+                RecipeType.None
+            ));
+            
+            AddRecipe(new CraftRecipe(
+                new List<ItemBase>() { new ItemSilverSword2(1), new ItemMagicalPowder(7) },
+                new ItemSilverSword3(1),  
+                RecipeType.None
+            ));
+
+            AddRecipe(new CraftRecipe(
                 new List<ItemBase>() { new ItemPlank(10), new ItemMagicalPowder(20) },
                 new ItemWandBase(1), 
                 RecipeType.None
@@ -50,24 +80,6 @@ namespace Item {
             AddRecipe(new CraftRecipe(
                 new List<ItemBase>() {  new ItemEmerald(4), new ItemWandBase(1) },
                 new ItemEmeraldWand(1), 
-                RecipeType.None
-            ));
-            
-            AddRecipe(new CraftRecipe(
-                new List<ItemBase>() { },
-                new ItemSilverSword3(1),
-                RecipeType.None
-            ));
-            
-            AddRecipe(new CraftRecipe(
-                new List<ItemBase>() {   },
-                new ItemDiamondWand(1), 
-                RecipeType.None
-            ));
-            
-            AddRecipe(new CraftRecipe(
-                new List<ItemBase>() {   },
-                new ItemRubyWand(1), 
                 RecipeType.None
             ));
         }
