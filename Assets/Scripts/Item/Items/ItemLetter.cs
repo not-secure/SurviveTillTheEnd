@@ -2,19 +2,22 @@
 using Player;
 using UI.Dialog;
 using UI.Note;
+using UI.Status;
 using UnityEngine;
 
 namespace Item.Items {
     public class ItemLetter: ItemBase {
         public ItemLetter(int count) : base(count) {
         }
+
+        public const int Id = 13;
         
         public override int ItemId => 13;
         public override int MaxStack => 1;
         public override ItemType[] Type => new [] { ItemType.Burnable };
         public override string Name => "Today's Letter";
 
-        public override string Description => "A letter for you\n" +
+        public override string Description => "A letter containing the attachments that your note was indicating.\n" +
                                               "<color=#ffc000>Story Item</color>";
 
         public override bool IsConsumed => true;
@@ -25,14 +28,9 @@ namespace Item.Items {
 
         public override void OnUseItem(PlayerController player) {
             base.OnUseItem(player);
+            player.Inventory.RemoveItem(new ItemLetter(player.Inventory.GetCount(ItemId)));
             
-            var dialogManager = GameObject.FindGameObjectWithTag("DialogManager")
-                .GetComponent<UIDialogManager>();
-            
-            var dialog = dialogManager.OpenIfNoneOpened(DialogKey.Note, dialogManager.note);
-            dialog.GetComponent<UINote>().SetDay(player.GameManager.DayCounter);
-            
-            EventManager.GetInstance().ExecuteEvents(player);
+            EventManager.GetInstance().ClaimItems(player);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Event;
 using Player;
 using UnityEngine;
 using World;
@@ -23,7 +24,7 @@ namespace Common {
         public Light directionalLight;
         public LightingPreset lightPreset;
 
-        private int _dayCounter = 1;
+        private int _dayCounter = 0;
         private float _daySpawnGap = 0;
         private int _prevSpawnTime = 0;
 
@@ -73,6 +74,7 @@ namespace Common {
                 directionalLight = RenderSettings.sun;
 
             StartCoroutine(UpdateGame());
+            ChangeDayStatus(false);
             Debug.Log("Starting game...");
         }
 
@@ -87,6 +89,7 @@ namespace Common {
             
             dayStatus = DayStatus.Day;
             _dayCounter++;
+            EventManager.GetInstance().ExecuteEvents(Player);
 
             Debug.Log("Changing to day..." + _dayCounter);
         }
