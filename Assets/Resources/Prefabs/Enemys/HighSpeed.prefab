@@ -112,7 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boxCollider: {fileID: 0}
   player: {fileID: 0}
-  speed: 10
+  speed: 7
 --- !u!198 &2691077061215671709
 ParticleSystem:
   m_ObjectHideFlags: 0

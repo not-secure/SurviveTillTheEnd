@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Common;
 using Entity.Neutral;
 using Item;
 using Player;
@@ -12,6 +13,7 @@ namespace Enemy {
 
         private PlayerController _playerController;
         private EnemyManager _enemyManager;
+        private GameManager _gameManager;
 
         public void Awake()
         {
@@ -21,6 +23,8 @@ namespace Enemy {
 
             _enemyManager = FindObjectOfType<EnemyManager>();
             _health = MaxHealth;
+
+            _gameManager = FindObjectOfType<GameManager>();
         }
 
         private float _deadAt = -1;
@@ -36,6 +40,8 @@ namespace Enemy {
         public virtual float AttackDuration => 1f;
         public virtual float MaxHealth => 100f;
         public virtual DroprateTable DroprateTable => new DroprateTable();
+
+        public static bool DieOnLight = true;
         
         public void Hurt(float damage, Vector3 damageSource) {
             if (_deadAt > 0)
@@ -55,7 +61,6 @@ namespace Enemy {
         }
 
         public void Update() {
-            var enemyTransform = transform;
             if (_deadAt > 0) {
                 _motion.y += 1f * Time.deltaTime;
 
@@ -65,15 +70,20 @@ namespace Enemy {
                 return;
             }
 
-            if (Time.time - _lastAttack < AttackDuration) return;
-            
-            var displacement = player.transform.position - enemyTransform.position;
-            if (!(displacement.magnitude < 3f)) return;
-            
-            _lastAttack = Time.time;
-            
-            displacement.y = 1.0f;
-            StartCoroutine(PlayerHurtCoroutine(displacement.normalized * PlayerKnockback));
+            if (Time.time - _lastAttack > AttackDuration) {
+                var displacement = player.transform.position - transform.position;
+                if (displacement.magnitude < 3f) {
+                    _lastAttack = Time.time;
+
+                    displacement.y = 1.0f;
+                    StartCoroutine(PlayerHurtCoroutine(displacement.normalized * PlayerKnockback));
+                }
+            }
+
+            if (DieOnLight && _gameManager.dayStatus == GameManager.DayStatus.Day) {
+                // Set it as dead, but do not drop items
+                _deadAt = Time.time;
+            }
         }
 
         public IEnumerator PlayerHurtCoroutine(Vector3 knockback) {

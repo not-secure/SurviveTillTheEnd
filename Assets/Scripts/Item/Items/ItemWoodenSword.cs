@@ -30,7 +30,7 @@ namespace Item.Items {
 
         private IEnumerator UseCoroutine(PlayerController player) {
             player.StartAttack(1);
-            player.GameManager.Enemies.AttackInRange(player.transform, 120, 5, 15);
+            player.GameManager.Enemies.AttackInRange(player.transform, 120, 5, 21);
             yield return new WaitForSeconds(0.5f);
             player.EndAttack();
         }

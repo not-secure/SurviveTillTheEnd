@@ -22,8 +22,15 @@ public class EnemySample : EnemyBase
             return;
         
         _droprateTable = new DroprateTable();
-        _droprateTable.AddDrop(new ItemEmerald(1), 5);
-        _droprateTable.AddDrop(new ItemSilver(3), 45);
+        _droprateTable.AddDrop(new ItemEmerald(1), 10);
+        _droprateTable.AddDrop(new ItemRuby(1), 10);
+        _droprateTable.AddDrop(new ItemDiamond(1), 10);
+        _droprateTable.AddDrop(new ItemSilver(1), 20);
+        _droprateTable.AddDrop(new ItemSilver(2), 25);
+        _droprateTable.AddDrop(new ItemMagicalPowder(2), 20);
+        _droprateTable.AddDrop(new ItemMagicalPowder(3), 10);
+        _droprateTable.AddDrop(new ItemApple(4), 5);
+        _droprateTable.AddDrop(new ItemSilverKey(7), 7);
     }
 
     public void Update() {
