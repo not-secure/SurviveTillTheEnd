@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2691077061215671709}
   - component: {fileID: 2691077061215671708}
   m_Layer: 0
-  m_Name: HighSpeedEnemy
+  m_Name: HighSpeed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,7 +113,6 @@ MonoBehaviour:
   boxCollider: {fileID: 0}
   player: {fileID: 0}
   speed: 10
-  damage: 1
 --- !u!198 &2691077061215671709
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4848,7 +4847,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 31460e8468f7d6f42a2ff4d2cb25f549, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

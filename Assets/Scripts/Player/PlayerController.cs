@@ -66,6 +66,17 @@ namespace Player {
         }
 
         public void Update() {
+            if (Health <= 0) {
+                World.GameOver();
+                return;
+            }
+
+            if (transform.position.y < -5)
+            {
+                World.GameOver();
+                return;
+            }
+
             var horizontal = Input.GetAxis("Horizontal") * rotateSpeed;
             var vertical = Input.GetAxis("Vertical") * moveSpeed;
 
@@ -110,7 +121,8 @@ namespace Player {
                 var interactableBlock = GetInteractableBlock();
                 if (!interactableBlock) return;
                 
-                InteractingBlock = interactableBlock;
+                InteractingBlock = interactableBlock;         
+
                 InteractingBlock.OnStartInteract(this);
                 _interactingId = _statusManager.AddProgress(
                     InteractingBlock.GetInteractProgress(this), 

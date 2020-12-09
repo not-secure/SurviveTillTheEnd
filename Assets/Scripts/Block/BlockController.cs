@@ -11,7 +11,7 @@ namespace Block {
         
         public virtual bool CanInteract(PlayerController player) {
             if (Time.time - _lastInteraction < Cooltime) return false;
-            if (player.Stamina < RequiredStamina) return false;
+            if (player.Stamina < RequiredStamina + 10) return false;
             var distance = (transform.position - player.transform.position).magnitude;
             return distance < InteractDistance;
         }
