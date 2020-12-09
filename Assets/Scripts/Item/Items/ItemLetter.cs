@@ -17,7 +17,7 @@ namespace Item.Items {
         public override ItemType[] Type => new [] { ItemType.Burnable };
         public override string Name => "Today's Letter";
 
-        public override string Description => "A letter containing the attachments that your note was indicating.\n" +
+        public override string Description => "A letter for you.\n" +
                                               "<color=#ffc000>Story Item</color>";
 
         public override bool IsConsumed => true;
@@ -28,9 +28,11 @@ namespace Item.Items {
 
         public override void OnUseItem(PlayerController player) {
             base.OnUseItem(player);
+            
+            // Remove all other letters
             player.Inventory.RemoveItem(new ItemLetter(player.Inventory.GetCount(ItemId)));
             
-            EventManager.GetInstance().ClaimItems(player);
+            EventManager.GetInstance().ReadLetter(player);
         }
     }
 }

@@ -9,9 +9,13 @@ namespace UI.Note {
         public void SetDay(int day) {
             dayCounter.text = day.ToString();
             content.text = (
-                Resources.Load<TextAsset>("Texts/Notes/day_" + day) ??
-                Resources.Load<TextAsset>("Texts/Notes/day_default")
+                Resources.Load<TextAsset>("Texts/Thoughts/day_" + day) ??
+                Resources.Load<TextAsset>("Texts/Thoughts/day_default")
             ).text;
+        }
+
+        public void SetContent(string text) {
+            content.text = text;
         }
     }
 }

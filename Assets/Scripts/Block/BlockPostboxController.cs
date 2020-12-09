@@ -10,25 +10,22 @@ namespace Block {
         public override void OnInteract(PlayerController player) {
             base.OnInteract(player);
 
-            if (player.Inventory.GetCount(ItemLetter.Id) > 0) {
-                UIStatusManager.GetInstance()?.AddText("You already have a letter!", 1.0f);
-                return;
-            }
+            var result = EventManager.GetInstance().ClaimItem(
+                player, transform.position + new Vector3(0, 4f, 0),
+                out var count
+            );
 
-            if (!EventManager.GetInstance().CanClaim(player)) {
-                UIStatusManager.GetInstance()?.AddText("You already have claimed today's attachments", 1.0f);
+            if (result) return;
+            if (count > 0) {
+                UIStatusManager.GetInstance()?.AddText("There were no letters but something came out", 2.5f);
                 return;
             }
             
-            EntityItem.DropItem(
-                player.Entities,
-                transform.position + new Vector3(0, 4f, 0),
-                new ItemLetter(1)
-            );
+            UIStatusManager.GetInstance()?.AddText("The postbox is empty.", 1.0f);
         }
 
         public override string GetInteractDescription(PlayerController player) {
-            return "Claim today's attachments";
+            return "Find today's letter";
         }
 
         public override string GetInteractProgress(PlayerController player) {
