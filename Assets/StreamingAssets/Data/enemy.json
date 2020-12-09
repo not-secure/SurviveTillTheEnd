@@ -3,6 +3,15 @@
     {
       "data": [
         {
+          "normal": 0,
+          "highspeed": 0,
+          "highdamage": 0
+        }
+      ]
+    },
+    {
+      "data": [
+        {
           "normal": 1,
           "highspeed": 0,
           "highdamage": 0
