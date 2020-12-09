@@ -8,11 +8,13 @@ public class TitleManager : MonoBehaviour
 {
     public Image title;
     public Text startText;
+    public Text copyrightText;
 
     public void Start()
     {
         title.color = new Color(title.color.r, title.color.g, title.color.b, 0);
         startText.color = new Color(startText.color.r, startText.color.g, startText.color.b, 0);
+        copyrightText.color = startText.color;
 
         StartCoroutine(FadeController());
     }
@@ -46,6 +48,7 @@ public class TitleManager : MonoBehaviour
         while (startText.color.a < 1)
         {
             startText.color = new Color(startText.color.r, startText.color.g, startText.color.b, startText.color.a + 0.01f);
+            copyrightText.color = startText.color;
             yield return new WaitForSeconds(0.02f);
         }
     }
