@@ -29,11 +29,11 @@ namespace Block {
         }
 
         public virtual void OnStartInteract(PlayerController player) {
-            player.Stamina -= RequiredStamina;
         }
         
         public virtual void OnInteract(PlayerController player) {
             _lastInteraction = Time.time;
+            player.Stamina -= RequiredStamina;
         }
     }
 }
