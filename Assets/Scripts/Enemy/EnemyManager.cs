@@ -56,7 +56,13 @@ public class EnemyManager : MonoBehaviour
 
     public int GetCurrentNightData()
     {
-        return waveData.data[day - 1].data.Length;
+        try
+        {
+            return waveData.data[day - 1].data.Length;
+        } catch
+        {
+            return waveData.data[waveData.data.Length - 1].data.Length;
+        }
     }
 
     public void SpawnWave(int day = -1, int num = -1)
