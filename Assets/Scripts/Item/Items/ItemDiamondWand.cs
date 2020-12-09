@@ -11,7 +11,7 @@ namespace Item.Items {
         public override int MaxStack => 1;
         public override ItemType[] Type => new[] { ItemType.Magic, ItemType.Wand, ItemType.Diamond, ItemType.Wooden };
         public override string Name => "Diamond Wand";
-        public override int RequiredStamina => 30;
+        public override int RequiredStamina => 100;
 
         public override string Description => "*freezing* beautiful magical wand.\n" +
                                               "<color=#00c0ff>Fires a *freezing* beautiful projectile.</color>";

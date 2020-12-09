@@ -66,7 +66,7 @@ namespace Item {
             ));
             
             AddRecipe(new CraftRecipe(
-                new List<ItemBase>() { new ItemDiamond(2), new ItemWandBase(1) },
+                new List<ItemBase>() { new ItemDiamond(4), new ItemWandBase(1) },
                 new ItemDiamondWand(1), 
                 RecipeType.None
             ));
@@ -78,7 +78,7 @@ namespace Item {
             ));
             
             AddRecipe(new CraftRecipe(
-                new List<ItemBase>() {  new ItemEmerald(4), new ItemWandBase(1) },
+                new List<ItemBase>() {  new ItemEmerald(2), new ItemPlank(4) },
                 new ItemEmeraldWand(1), 
                 RecipeType.None
             ));

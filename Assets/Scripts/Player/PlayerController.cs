@@ -89,7 +89,7 @@ namespace Player {
             gameObject.transform.Rotate(new Vector3(0, horizontal, 0));
 
             if (Stamina < MaxStamina && Time.time - _lastStaminaUse > TimeToStaminaFill) {
-                if (Time.time - _lastStaminaHeal > 0.1f) {
+                if (Time.time - _lastStaminaHeal > 0.05f) {
                     Stamina = Math.Min(
                         MaxStamina,
                         Stamina + staminaRegeneration
@@ -207,7 +207,7 @@ namespace Player {
             }
         }
 
-        private const float TimeToStaminaFill = 10f;
+        private const float TimeToStaminaFill = 6f;
         private float _lastStaminaUse = 0f;
         private float _lastStaminaHeal = 0f;
         private int _stamina = 100;

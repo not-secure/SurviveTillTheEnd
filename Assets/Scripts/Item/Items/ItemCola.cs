@@ -20,7 +20,7 @@ namespace Item.Items {
         
         public override void OnUseItem(PlayerController player) {
             base.OnUseItem(player);
-            player.Health += 10;
+            player.Health += 30;
         }
     }
 }

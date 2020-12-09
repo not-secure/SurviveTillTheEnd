@@ -13,7 +13,7 @@ namespace Item.Items {
         public override ItemType[] Type => new[] { ItemType.Sword, ItemType.Silver };
         public override string Name => "Silver Sword";
         public override int RequiredStamina => 10;
-        public override float Cooltime => 2f;
+        public override float Cooltime => 1f;
         public override string Description => "Your best negotiator friend.\n" +
                                               "<color=#00c0ff>You may attack those enemy with this</color>";
         

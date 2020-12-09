@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Entity.Neutral;
+using Event.Events;
 using Item;
 using Item.Items;
 using Player;
@@ -38,6 +39,12 @@ namespace Event {
                 new EventBase[] { },
                 new[] {new ItemMagicalPowder(2)}
             );
+            
+            _eventTable.Add(7, new DayInfo(
+                7, 
+                new [] { new ToggleLightDeathEvent(false) }, 
+                new [] { new ItemMagicalPowder(2) }
+            ));
         }
 
         private int _lastDate = -1;

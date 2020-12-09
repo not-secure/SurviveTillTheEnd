@@ -16,10 +16,10 @@ namespace Block {
             if (Table != null) return;
             
             Table = new DroprateTable();
-            Table.AddDrop(new ItemCider(1), 25);
+            Table.AddDrop(new ItemCider(1), 30);
             Table.AddDrop(new ItemCola(1), 25);
             Table.AddDrop(new ItemDkPepper(1), 25);
-            Table.AddDrop(new ItemStaminaAde(1), 25);
+            Table.AddDrop(new ItemStaminaAde(1), 30);
         }
 
         public override float Cooltime => 1f;
@@ -34,8 +34,8 @@ namespace Block {
         public override float GetInteractDuration(PlayerController player) {
             if (player.Inventory.GetCount(ItemType.Coin) == 0)
                 return 0.3f;
-            
-            return base.GetInteractDuration(player);
+
+            return 2f;
         }
 
         public override void OnInteract(PlayerController player) {

@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Enemy;
+using Player;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class WaveDataAll
@@ -35,6 +38,7 @@ public class EnemyManager : MonoBehaviour
     public GameObject highdamageEnemy;
 
     private List<EnemyBase> _enemies = new List<EnemyBase>();
+    private PlayerController _player;
 
     public void LoadData()
     {
@@ -52,6 +56,7 @@ public class EnemyManager : MonoBehaviour
         normalEnemy = Resources.Load<GameObject>("Prefabs/Enemys/Normal");
         highspeedEnemy = Resources.Load<GameObject>("Prefabs/Enemys/HighSpeed");
         highdamageEnemy = Resources.Load<GameObject>("Prefabs/Enemys/HighDamage");
+        _player = FindObjectOfType<PlayerController>();
     }
 
     public int GetCurrentNightData()
@@ -106,6 +111,11 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnEnemy(GameObject enemy) {
         var enemySpawned = Instantiate(enemy);
+        if (_player) {
+            enemySpawned.transform.position = _player.transform.position + Quaternion.Euler(
+                0, Random.Range(0f, 360f), 0
+            ) * Vector3.forward * Random.Range(10f, 20f);
+        }
         var enemyController = enemySpawned.GetComponent<EnemyBase>();
         
         _enemies.Add(enemyController);
