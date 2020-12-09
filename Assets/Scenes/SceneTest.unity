@@ -744,7 +744,7 @@ MonoBehaviour:
   worldManagerObject: {fileID: 1700585871}
   enemyManagerObject: {fileID: 363305174}
   time: 0
-  changePeriod: 5
+  changePeriod: 100
   dayStatus: 0
   directionalLight: {fileID: 623900352}
   lightPreset: {fileID: 11400000, guid: 818afa4c2e780e34883aa53a6c1e9cce, type: 2}

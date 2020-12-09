@@ -41,7 +41,7 @@ namespace Enemy {
         public virtual float MaxHealth => 100f;
         public virtual DroprateTable DroprateTable => new DroprateTable();
 
-        public static bool DieOnLight = true;
+        public static bool DieOnLight = false;
         
         public void Hurt(float damage, Vector3 damageSource) {
             if (_deadAt > 0)

@@ -58,9 +58,14 @@ public class EnemyManager : MonoBehaviour
     {
         try
         {
-            return waveData.data[day - 1].data.Length;
+            int d = (day >= waveData.data.Length) ? waveData.data.Length - 1 : day - 1;
+
+            Debug.Log(d);
+            Debug.Log(JsonUtility.ToJson(waveData.data[d]));
+            return waveData.data[d].data.Length;
         } catch
         {
+            Debug.Log(waveData.data[waveData.data.Length - 1].data);
             return waveData.data[waveData.data.Length - 1].data.Length;
         }
     }
